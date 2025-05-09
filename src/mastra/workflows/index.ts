@@ -191,8 +191,6 @@ const hackerNewsFetchLatestStep = createStep({
     text: z.string().describe("The formatted list of Hacker News stories"),
   }),
   execute: async ({ mastra }) => {
-    //TODO(tacogips) inputData is null
-    // Get the agent from mastra
     const agent = mastra?.agents?.hackerNewsAgent;
 
     if (!agent) {
@@ -228,13 +226,17 @@ const fetchNews = createStep({
   execute: async ({ inputData, mastra }) => {
     //TODO(tacogips) inputData is null
     // Get the agent from mastra
-    const agent = mastra?.agents?.urlToMarkdownAgent;
+    const agent = mastra?.getAgents()?.urlToMarkdownAgent;
 
     if (!agent) {
       throw new Error("url to markdown Agent not found");
     }
 
-    console.log("==========", inputData);
+    console.log(
+      "==========",
+
+      inputData,
+    ); //TODO()?null?
     let prompt = `
       ## Instruction
       You are an excellent web news curator.
