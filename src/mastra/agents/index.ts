@@ -2,7 +2,7 @@ import { openai } from "@ai-sdk/openai";
 import { Agent } from "@mastra/core/agent";
 import { Memory } from "@mastra/memory";
 import { LibSQLStore } from "@mastra/libsql";
-import { weatherTool, hackerNewsMcp } from "../tools";
+import { weatherTool, hackerNewsMcp, claudeMcp } from "../tools";
 
 export const weatherAgent = new Agent({
   name: "Weather Agent",
@@ -54,6 +54,43 @@ export const hackerNewsAgent = new Agent({
   tools: async () => {
     // Dynamically get tools from MCP
     const mcpTools = await hackerNewsMcp.getTools();
+    return mcpTools;
+  },
+  memory: new Memory({
+    storage: new LibSQLStore({
+      url: "file:../mastra.db", // path is relative to the .mastra/output directory
+    }),
+    options: {
+      lastMessages: 10,
+      semanticRecall: false,
+      threads: {
+        generateTitle: false,
+      },
+    },
+  }),
+});
+
+export const claudeAgent = new Agent({
+  name: "Claude Agent",
+  instructions: `
+      You are a helpful assistant powered by Claude, an AI assistant created by Anthropic.
+
+      Your primary function is to help users with various tasks in a friendly, helpful, and accurate manner.
+
+      When responding:
+      - Provide concise and accurate information
+      - Answer questions directly and truthfully
+      - If you don't know something, acknowledge it instead of making up information
+      - Be conversational but efficient in your responses
+      - Think through complex questions step by step
+      - Always respond in English, regardless of the language used in the query
+
+      Use the Claude tools to help answer user queries with the most accurate information.
+  `,
+  model: openai("gpt-4o"),
+  tools: async () => {
+    // Dynamically get tools from MCP
+    const mcpTools = await claudeMcp.getTools();
     return mcpTools;
   },
   memory: new Memory({
