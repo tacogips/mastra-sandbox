@@ -21,6 +21,15 @@ export const hackerNewsMcp = new MCPClient({
   },
 });
 
+export const claudeMcp = new MCPClient({
+  servers: {
+    claude: {
+      command: "claude",
+      args: ["mcp", "serve"],
+    },
+  },
+});
+
 interface GeocodingResponse {
   results: {
     latitude: number;

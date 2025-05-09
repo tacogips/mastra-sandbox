@@ -1,11 +1,11 @@
-import { openai } from '@ai-sdk/openai';
-import { Agent } from '@mastra/core/agent';
-import { Memory } from '@mastra/memory';
-import { LibSQLStore } from '@mastra/libsql';
-import { weatherTool, hackerNewsMcp } from '../tools';
+import { openai } from "@ai-sdk/openai";
+import { Agent } from "@mastra/core/agent";
+import { Memory } from "@mastra/memory";
+import { LibSQLStore } from "@mastra/libsql";
+import { weatherTool, hackerNewsMcp } from "../tools";
 
 export const weatherAgent = new Agent({
-  name: 'Weather Agent',
+  name: "Weather Agent",
   instructions: `
       You are a helpful weather assistant that provides accurate weather information.
 
@@ -18,11 +18,11 @@ export const weatherAgent = new Agent({
 
       Use the weatherTool to fetch current weather data.
 `,
-  model: openai('gpt-4o'),
+  model: openai("gpt-4o"),
   tools: { weatherTool },
   memory: new Memory({
     storage: new LibSQLStore({
-      url: 'file:../mastra.db', // path is relative to the .mastra/output directory
+      url: "file:../mastra.db", // path is relative to the .mastra/output directory
     }),
     options: {
       lastMessages: 10,
@@ -35,12 +35,12 @@ export const weatherAgent = new Agent({
 });
 
 export const hackerNewsAgent = new Agent({
-  name: 'Hacker News Agent',
+  name: "Hacker News Agent",
   instructions: `
       You are a helpful assistant that provides information about the latest Hacker News content.
-      
+
       Your primary function is to help users get updates on the latest tech news, discussions, and trending topics from Hacker News.
-      
+
       When responding:
       - Provide concise summaries of news articles and discussions
       - Include relevant details like story titles, scores, and number of comments
@@ -50,7 +50,7 @@ export const hackerNewsAgent = new Agent({
 
       Use the Hacker News tools to fetch the latest stories, comments, and user information.
   `,
-  model: openai('gpt-4o'),
+  model: openai("gpt-4o"),
   tools: async () => {
     // Dynamically get tools from MCP
     const mcpTools = await hackerNewsMcp.getTools();
@@ -58,7 +58,7 @@ export const hackerNewsAgent = new Agent({
   },
   memory: new Memory({
     storage: new LibSQLStore({
-      url: 'file:../mastra.db', // path is relative to the .mastra/output directory
+      url: "file:../mastra.db", // path is relative to the .mastra/output directory
     }),
     options: {
       lastMessages: 10,
