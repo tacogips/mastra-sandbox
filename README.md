@@ -1,4 +1,19 @@
-## output example
+# Hacker News Translator
+
+This is a study project using the Mastra framework that fetches top news from Hacker News and translates them into Japanese using a specific character's speech pattern.
+
+## Overview
+
+This project demonstrates how to:
+- Fetch top stories from Hacker News API
+- Extract content from news articles
+- Translate and format content in a specific speaking style (ズンダ語/Zunda-style with "のだ" sentence endings)
+
+## Screenshot
+
+![Mastra Workflow](/img/image.png)
+
+## Output Example
 
 ```json
 {
