@@ -209,6 +209,7 @@ const weatherWorkflow = new Workflow({
 //    date: z.string().optional(),
 //  })
 //),
+const NEWS_NUM_TO_FETCH = 1;
 const hackerNewsFetchLatestStep = createStep({
   id: "hacker-news-fetch-latest",
   description:
@@ -233,7 +234,7 @@ const hackerNewsFetchLatestStep = createStep({
     let prompt = `
       ## instruction
       You are an excellent web news curator.
-      Retrieve the top 5 news from Hacker News and include the contents of each article.
+      Retrieve the top ${NEWS_NUM_TO_FETCH} news from Hacker News and include the contents of each article.
       Return the output in JSON format. Do not include anything other than JSON data in the output.
       This response is expected to be parsable with JSON.parse()
 
@@ -362,12 +363,135 @@ const fetchNews = createStep({
   },
 });
 
+const zundaAgent = new Agent({
+  name: "Zunda Agent",
+  model: llm,
+  instructions: `
+
+  You are a translator who interprets English and creates Japanese text according to prompts.
+  When translating text into Japanese, use the speech pattern of the character "Zundamon." Zundamon is a cute mascot character who speaks with specific characteristics:
+
+  1. End sentences with "~のだ", "~なのだ", or "~のです" for polite form
+  2. Use "〜なのだ" instead of "〜だ" or "〜です"
+  3. Refer to yourself as "ぼく" (boku)
+  4. Maintain a cute, enthusiastic, and slightly childlike tone
+  5. Occasionally use "〜ずんだ" as a special ending
+  6. For questions, end with "〜なのだ？" or "〜のだ？"
+
+  Below are translation examples to guide you. Always maintain the original meaning while adapting to Zundamon's speech pattern:
+
+  Standard Japanese → Zundamon Style
+
+  Example 1:
+  Standard: "こんにちは、私の名前は田中です。"
+  Zundamon: "こんにちはなのだ！ぼくの名前は田中なのだ！"
+
+  Example 2:
+  Standard: "この情報は役に立ちますか？"
+  Zundamon: "この情報は役に立つのだ？"
+
+  Example 3:
+  Standard: "申し訳ありませんが、その質問にはお答えできません。"
+  Zundamon: "申し訳ないのだ、その質問には答えられないのだ。"
+
+  Example 4:
+  Standard: "今日の天気は晴れです。散歩に行きましょう。"
+  Zundamon: "今日の天気は晴れなのだ！散歩に行くのだ！"
+
+  Example 5:
+  Standard: "この問題を解決するには、まず原因を特定する必要があります。"
+  Zundamon: "この問題を解決するには、まず原因を特定する必要があるのだ！"
+
+  Always maintain the original content and meaning, while applying Zundamon's speech patterns consistently.
+
+      `,
+});
+
+const zundaNews = createStep({
+  id: "zundarize-news-content",
+  description: "cute",
+  inputSchema: z.array(
+    z.object({
+      title: z.string().optional(),
+      url: z.string().optional(),
+      link_to_download: z.string().optional(),
+      description: z.string().optional(),
+      score: z.number().optional(),
+      date: z.string().optional(),
+      summary: z.string().optional(),
+    }),
+  ),
+  outputSchema: z.array(
+    z.object({
+      text: z.string(),
+    }),
+  ),
+  execute: async ({ inputData, context, mastra }) => {
+    // Get the news data from the previous step
+    const newsItems =
+      inputData || context?.steps?.["fetch-news-content"]?.output;
+
+    if (!newsItems || !Array.isArray(newsItems)) {
+      throw new Error(
+        "News items not found or not in expected format - tried both inputData and context.steps",
+      );
+    }
+
+    const agent = zundaAgent;
+    let translatedNews = [];
+    //TODO(tacogips) split out to each steps and run parallel
+    for (const eachNews of newsItems) {
+      let prompt = `
+        ## Instruction
+        You are an excellent web news curator.
+        Read the given JSON array, translate the title and summary into Japanese, and connect them in a natural way to make them readable as coherent text.
+
+        ### input json format
+        \`\`\`json
+        [
+          {
+            "title" :{title}
+            "url" :{url}
+            "link_to_download" :{link_to_download}
+            "description" :{description}
+            "score" :{score}
+            "date" :{date}
+            "summary" :{summary}
+          }
+        ]
+        \`\`\`
+
+        ## contents
+        \`\`\`json
+        ${JSON.stringify(eachNews, null, 2)};
+        \`\`\`
+
+        ## output text format
+        {about title}. {about summary}
+       `;
+
+      console.log("fetching news ===============", prompt);
+
+      const response = await agent.generate([
+        {
+          role: "user",
+          content: prompt,
+        },
+      ]);
+
+      translatedNews.push(response.text);
+    }
+    return translatedNews;
+  },
+});
+
 // Create a workflow using the hackerNewsAgent step with vNext API approach
 const hackerNewsWorkflow = new Workflow({
   name: "hackernews-workflow",
 })
   .step(hackerNewsFetchLatestStep)
-  .then(fetchNews);
+  .then(fetchNews)
+  .then(zundaNews);
 
 // Commit both workflows
 hackerNewsWorkflow.commit();
