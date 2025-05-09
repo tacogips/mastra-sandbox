@@ -182,8 +182,8 @@ const weatherWorkflow = new Workflow({
   .step(fetchWeather)
   .then(planActivities);
 
-// Create a step that uses the hackerNewsAgent
-const hackerNewsFetchLatestStep = new Step({
+// Create a step that uses the hackerNewsAgent using vNext API
+const hackerNewsFetchLatestStep = createStep({
   id: "hacker-news-fetch-latest",
   description:
     "Fetches the latest stories from Hacker News using hackerNewsAgent",
@@ -213,27 +213,22 @@ const hackerNewsFetchLatestStep = new Step({
   },
 });
 
-const fetchNews = new Step({
-  id: "hacker-news-fetch-latest",
+const fetchNews = createStep({
+  id: "fetch-news-content",
   description:
-    "Fetches the latest stories from Hacker News using hackerNewsAgent",
+    "Fetches the content of news stories using urlToMarkdownAgent",
   inputSchema: z.object({
     text: z.string().describe("The formatted list of Hacker News stories"),
   }),
   outputSchema: z.object({
-    text: z.string().describe("The formatted list of Hacker News stories"),
+    text: z.string().describe("The formatted list of Hacker News stories with content"),
   }),
-  execute: async ({ context, mastra }) => {
-    // Get the previous step's result using context.getStepResult
-    const previousStepResult = context?.getStepResult(
-      hackerNewsFetchLatestStep,
-    );
-
-    console.log("==========", previousStepResult);
-
-    if (!previousStepResult || !previousStepResult.text) {
-      throw new Error("Previous step result not found or missing text field");
+  execute: async ({ inputData, mastra }) => {
+    if (!inputData || !inputData.text) {
+      throw new Error("Input data not found or missing text field");
     }
+
+    console.log("==========", inputData);
 
     // Get the agent from mastra
     const agent = mastra?.getAgents()?.urlToMarkdownAgent;
@@ -241,15 +236,13 @@ const fetchNews = new Step({
     if (!agent) {
       throw new Error("url to markdown Agent not found");
     }
-
-    console.log("==========", previousStepResult);
-
+    
     let prompt = `
       ## Instruction
       You are an excellent web news curator.
       Extract the source URLs from the following summarized articles' contents, fetch their content using the web fetch tool. Summarize the retrieved content and attach it.
       ## contents
-     ${previousStepResult.text}`;
+     ${inputData.text}`;
 
     const response = await agent.generate([
       {
@@ -262,12 +255,17 @@ const fetchNews = new Step({
   },
 });
 
-// Create a workflow using the hackerNewsAgent step
+// Create a workflow using the hackerNewsAgent step with vNext API approach
 const hackerNewsWorkflow = new Workflow({
   name: "hackernews-workflow",
 })
   .step(hackerNewsFetchLatestStep)
-  .then(fetchNews);
+  .then(fetchNews, {
+    // Map the output of the first step to the input of the second step
+    variables: {
+      text: { step: hackerNewsFetchLatestStep, path: 'text' }
+    }
+  });
 
 // Commit both workflows
 hackerNewsWorkflow.commit();
