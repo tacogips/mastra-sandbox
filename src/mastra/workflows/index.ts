@@ -200,7 +200,21 @@ const hackerNewsFetchLatestStep = createStep({
     let prompt = `
       ## instruction
       You are an excellent web news curator.
-      Retrieve the top 5 news from Hacker News and include the contents of each article`;
+      Retrieve the top 5 news from Hacker News and include the contents of each article.
+      Return the output in JSON format. Do not include anything other than JSON data in the output.
+
+      ## Output json format
+      [
+        {
+          "title" :{title}
+          "url" :{url}
+          "link_to_download" :{link_to_download}
+          "description" :{description}
+          "score" :{score}
+          "date" :{date}
+        }
+      ]
+      `;
 
     const response = await agent.generate([
       {
@@ -224,10 +238,21 @@ const fetchNews = createStep({
       .string()
       .describe("The formatted list of Hacker News stories with content"),
   }),
-  execute: async ({ inputData, mastra }) => {
-    if (!inputData || !inputData.text) {
-      throw new Error("Input data not found or missing text field");
+  execute: async ({ inputData, context, mastra }) => {
+    console.log("Debug - Input Data:", inputData);
+    console.log("Debug - Context:", context);
+
+    // Try both methods to get data
+    const newsText =
+      inputData?.text ||
+      context?.steps?.["hacker-news-fetch-latest"]?.output?.text;
+
+    if (!newsText) {
+      throw new Error(
+        "News text not found - tried both inputData and context.steps",
+      );
     }
+    console.log("===============", newsText);
 
     // Get the agent from mastra
     const agent = mastra?.getAgents()?.urlToMarkdownAgent;
@@ -241,7 +266,7 @@ const fetchNews = createStep({
       You are an excellent web news curator.
       Extract the source URLs from the following summarized articles' contents, fetch their content using the web fetch tool. Summarize the retrieved content and attach it.
       ## contents
-     ${inputData.text}`;
+     ${newsText}`;
 
     const response = await agent.generate([
       {
