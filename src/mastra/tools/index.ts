@@ -1,6 +1,7 @@
 import { createTool } from "@mastra/core/tools";
 import { MCPClient } from "@mastra/mcp";
 import { z } from "zod";
+import TurndownService from "turndown";
 
 /**
  * Hacker News Message Channel Protocol client
@@ -17,15 +18,6 @@ export const hackerNewsMcp = new MCPClient({
     hackerNews: {
       command: "hn-mcp",
       args: ["stdio"],
-    },
-  },
-});
-
-export const claudeMcp = new MCPClient({
-  servers: {
-    claude: {
-      command: "claude",
-      args: ["mcp", "serve"],
     },
   },
 });
@@ -129,3 +121,55 @@ function getWeatherCondition(code: number): string {
   };
   return conditions[code] || "Unknown";
 }
+
+export const urlToMarkdownTool = createTool({
+  id: "url-to-markdown",
+  description: "Fetches content from a URL and converts it to markdown format",
+  inputSchema: z.object({
+    url: z.string().url().describe("The URL to fetch content from"),
+  }),
+  outputSchema: z.object({
+    markdown: z.string().describe("The fetched content converted to markdown"),
+    originalUrl: z.string().describe("The original URL that was fetched"),
+  }),
+  execute: async ({ context }) => {
+    try {
+      const response = await fetch(context.url);
+      
+      if (!response.ok) {
+        throw new Error(`Failed to fetch URL: ${response.status} ${response.statusText}`);
+      }
+      
+      const contentType = response.headers.get("content-type") || "";
+      
+      // Handle HTML content
+      if (contentType.includes("text/html")) {
+        const html = await response.text();
+        const turndownService = new TurndownService();
+        const markdown = turndownService.turndown(html);
+        
+        return {
+          markdown,
+          originalUrl: context.url,
+        };
+      } 
+      
+      // Handle plain text content
+      if (contentType.includes("text/plain")) {
+        const text = await response.text();
+        return {
+          markdown: text,
+          originalUrl: context.url,
+        };
+      }
+      
+      // Handle unsupported content types
+      throw new Error(`Unsupported content type: ${contentType}`);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(`Error fetching URL: ${error.message}`);
+      }
+      throw new Error("Unknown error occurred while fetching URL");
+    }
+  },
+});

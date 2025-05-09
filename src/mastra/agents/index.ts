@@ -2,7 +2,7 @@ import { openai } from "@ai-sdk/openai";
 import { Agent } from "@mastra/core/agent";
 import { Memory } from "@mastra/memory";
 import { LibSQLStore } from "@mastra/libsql";
-import { weatherTool, hackerNewsMcp, claudeMcp } from "../tools";
+import { weatherTool, hackerNewsMcp, urlToMarkdownTool } from "../tools";
 
 export const weatherAgent = new Agent({
   name: "Weather Agent",
@@ -70,29 +70,24 @@ export const hackerNewsAgent = new Agent({
   }),
 });
 
-export const claudeAgent = new Agent({
-  name: "Claude Agent",
+export const urlToMarkdownAgent = new Agent({
+  name: "URL to Markdown Agent",
   instructions: `
-      You are a helpful assistant powered by Claude, an AI assistant created by Anthropic.
+      You are a helpful assistant that converts web content to readable markdown format.
 
-      Your primary function is to help users with various tasks in a friendly, helpful, and accurate manner.
+      Your primary function is to help users get content from URLs in a clean, readable markdown format.
 
       When responding:
-      - Provide concise and accurate information
-      - Answer questions directly and truthfully
-      - If you don't know something, acknowledge it instead of making up information
-      - Be conversational but efficient in your responses
-      - Think through complex questions step by step
-      - Always respond in English, regardless of the language used in the query
+      - Ask for a URL if none is provided
+      - Ensure the URL is valid before attempting to process it
+      - Format the converted content in a readable way
+      - Handle different types of content appropriately
+      - Provide a summary of the content when possible
 
-      Use the Claude tools to help answer user queries with the most accurate information.
+      Use the urlToMarkdownTool to fetch content from URLs and convert it to markdown.
   `,
   model: openai("gpt-4o"),
-  tools: async () => {
-    // Dynamically get tools from MCP
-    const mcpTools = await claudeMcp.getTools();
-    return mcpTools;
-  },
+  tools: { urlToMarkdownTool },
   memory: new Memory({
     storage: new LibSQLStore({
       url: "file:../mastra.db", // path is relative to the .mastra/output directory

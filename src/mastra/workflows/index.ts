@@ -199,8 +199,48 @@ const hackerNewsFetchLatestStep = createStep({
       throw new Error("Hacker News Agent not found");
     }
 
-    let prompt =
-      "Retrieve the top 10 news from Hacker News and include the contents of each article";
+    let prompt = `
+      ## instruction
+      You are an excellent web news curator.
+      Retrieve the top 5 news from Hacker News and include the contents of each article`;
+
+    const response = await agent.generate([
+      {
+        role: "user",
+        content: prompt,
+      },
+    ]);
+
+    return { text: response.text };
+  },
+});
+
+const fetchNews = createStep({
+  id: "hacker-news-fetch-latest",
+  description:
+    "Fetches the latest stories from Hacker News using hackerNewsAgent",
+  inputSchema: z.object({
+    text: z.string().describe("The formatted list of Hacker News stories"),
+  }),
+  outputSchema: z.object({
+    text: z.string().describe("The formatted list of Hacker News stories"),
+  }),
+  execute: async ({ inputData, mastra }) => {
+    //TODO(tacogips) inputData is null
+    // Get the agent from mastra
+    const agent = mastra?.agents?.claudeAgent;
+
+    if (!agent) {
+      throw new Error("Claude News Agent not found");
+    }
+
+    console.log("==========", inputData);
+    let prompt = `
+      ## Instruction
+      You are an excellent web news curator.
+      Extract the source URLs from the following summarized articles' contents, fetch their content using the web fetch tool. Summarize the retrieved content and attach it.
+      ## contents
+     ${inputData.text}`;
 
     const response = await agent.generate([
       {
@@ -216,7 +256,9 @@ const hackerNewsFetchLatestStep = createStep({
 // Create a workflow using the hackerNewsAgent step
 const hackerNewsWorkflow = new Workflow({
   name: "hackernews-workflow",
-}).step(hackerNewsFetchLatestStep);
+})
+  .step(hackerNewsFetchLatestStep)
+  .then(fetchNews);
 
 // Commit both workflows
 hackerNewsWorkflow.commit();
