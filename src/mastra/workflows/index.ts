@@ -183,11 +183,78 @@ const weatherWorkflow = new Workflow({
 
 weatherWorkflow.commit();
 
-const hackerNewsFetchLatestStep = new Step({}); //TODO implement thid
+const hackerNewsFetchLatestStep = createStep({
+  id: "hacker-news-fetch-latest",
+  description: "Fetches the latest stories from Hacker News",
+  inputSchema: z.object({
+    limit: z.number().default(10).describe("Number of stories to fetch"),
+  }),
+  outputSchema: z.object({
+    stories: z.array(
+      z.object({
+        id: z.number(),
+        title: z.string(),
+        url: z.string().optional(),
+        score: z.number(),
+        time: z.number(),
+        commentCount: z.number(),
+      })
+    ),
+  }),
+  execute: async ({ context, mastra }) => {
+    const toolsCollection = await hackerNewsMcp.getTools();
+    
+    // Get the top stories tool
+    const getTopStoriesIds = Object.values(toolsCollection).find(
+      (tool) => tool.id === "get-top-stories"
+    );
+    
+    if (!getTopStoriesIds) {
+      throw new Error("Failed to find getTopStories tool");
+    }
+    
+    // Get the item tool
+    const getItem = Object.values(toolsCollection).find(
+      (tool) => tool.id === "get-item"
+    );
+    
+    if (!getItem) {
+      throw new Error("Failed to find getItem tool");
+    }
+    
+    // Get input parameters
+    const inputData = context?.currentStepInputData();
+    const limit = inputData?.limit || 10;
+    
+    // Get top story IDs
+    const storyIds = await getTopStoriesIds.execute({});
+    
+    // Get details for each story (up to the limit)
+    const stories = [];
+    for (let i = 0; i < Math.min(limit, storyIds.length); i++) {
+      const story = await getItem.execute({ id: storyIds[i] });
+      stories.push({
+        id: story.id,
+        title: story.title,
+        url: story.url,
+        score: story.score,
+        time: story.time,
+        commentCount: story.kids?.length || 0,
+      });
+    }
+    
+    return { stories };
+  },
+});
+
 const hackerNewsWorkflow = new Workflow({
   name: "hackernews-workflow",
+  triggerSchema: z.object({
+    limit: z.number().optional().default(10).describe("Number of stories to fetch"),
+  }),
 }).step(hackerNewsFetchLatestStep);
 
+hackerNewsWorkflow.commit();
 weatherWorkflow.commit();
 
-export { weatherWorkflow };
+export { weatherWorkflow, hackerNewsWorkflow };
