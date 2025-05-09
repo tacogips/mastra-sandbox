@@ -223,8 +223,18 @@ const fetchNews = new Step({
   outputSchema: z.object({
     text: z.string().describe("The formatted list of Hacker News stories"),
   }),
-  execute: async ({ inputData, mastra }) => {
-    //TODO(tacogips) inputData is null
+  execute: async ({ context, mastra }) => {
+    // Get the previous step's result using context.getStepResult
+    const previousStepResult = context?.getStepResult(
+      hackerNewsFetchLatestStep,
+    );
+
+    console.log("==========", previousStepResult);
+
+    if (!previousStepResult || !previousStepResult.text) {
+      throw new Error("Previous step result not found or missing text field");
+    }
+
     // Get the agent from mastra
     const agent = mastra?.getAgents()?.urlToMarkdownAgent;
 
@@ -232,17 +242,14 @@ const fetchNews = new Step({
       throw new Error("url to markdown Agent not found");
     }
 
-    console.log(
-      "==========",
+    console.log("==========", previousStepResult);
 
-      inputData,
-    ); //TODO()?null?
     let prompt = `
       ## Instruction
       You are an excellent web news curator.
       Extract the source URLs from the following summarized articles' contents, fetch their content using the web fetch tool. Summarize the retrieved content and attach it.
       ## contents
-     ${inputData.text}`;
+     ${previousStepResult.text}`;
 
     const response = await agent.generate([
       {
