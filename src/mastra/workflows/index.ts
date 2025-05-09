@@ -183,6 +183,17 @@ const weatherWorkflow = new Workflow({
   .then(planActivities);
 
 // Create a step that uses the hackerNewsAgent using vNext API
+
+//outputSchema: z.array(
+//  z.object({
+//    title: z.string().optional(),
+//    url: z.string().optional(),
+//    link_to_download: z.string().optional(),
+//    description: z.string().optional(),
+//    score: z.number().optional(),
+//    date: z.string().optional(),
+//  })
+//),
 const hackerNewsFetchLatestStep = createStep({
   id: "hacker-news-fetch-latest",
   description:
