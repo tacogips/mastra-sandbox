@@ -1,0 +1,16 @@
+{
+    "id": "https://mastra.ai/examples",
+    "title": "Examples List: Workflows, Agents, RAG | Mastra Docs",
+    "url": "https://mastra.ai/examples",
+    "author": "",
+    "text": "Examples Overview \n The Examples section is a short list of example projects demonstrating basic AI engineering with Mastra, including text generation, structured output, streaming responses, and retrieval‐augmented generation (RAG). \n Agent with System Prompt Agentic Workflows Using a Tool Hierarchical Multi-Agent System Multi-Agent Workflow Bird Checker Giving a System Prompt",
+    "image": "https://mastra.ai/api/og/docs?title=Examples%20List%3A%20Workflows%2C%20Agents%2C%20RAG%20%7C%20Mastra%20Docs",
+    "extras": {
+        "links": [
+            "https://mastra.ai/",
+            "https://mastra.ai/docs",
+            "https://mastra.ai/examples",
+            "https://mastra.ai/showcase"
+        ]
+    }
+}

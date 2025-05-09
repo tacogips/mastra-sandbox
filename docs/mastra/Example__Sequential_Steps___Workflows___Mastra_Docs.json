@@ -1,0 +1,18 @@
+{
+    "id": "https://mastra.ai/examples/workflows/sequential-steps",
+    "title": "Example: Sequential Steps | Workflows | Mastra Docs",
+    "url": "https://mastra.ai/examples/workflows/sequential-steps",
+    "publishedDate": "",
+    "author": "",
+    "text": "Workflow with Sequential Steps \n Workflow can be chained to run one after another in a specific sequence. \n Control Flow Diagram \n This example shows how to chain workflow steps by using the then method demonstrating how to pass data between sequential steps and execute them in order. \n Here’s the control flow diagram: \n Creating the Steps \n Let’s start by creating the steps and initializing the workflow. \n import { Step, Workflow } from \" @mastra/core/workflows \"; \n import { z } from \" zod \"; \n \n const stepOne = new Step ({ \n id: \" stepOne \", \n execute: async ({ context }) =&gt; ({ \n doubledValue: context.triggerData.inputValue * 2, \n }), \n}); \n \n const stepTwo = new Step ({ \n id: \" stepTwo \", \n execute: async ({ context }) =&gt; { \n if (context.steps.stepOne.status!== \" success \") { \n return { incrementedValue: 0 } \n } \n \n return { incrementedValue: context.steps.stepOne.output.doubledValue + 1 } \n }, \n}); \n \n const stepThree = new Step ({ \n id: \" stepThree \", \n execute: async ({ context }) =&gt; { \n if (context.steps.stepTwo.status!== \" success \") { \n return { tripledValue: 0 } \n } \n \n return { tripledValue: context.steps.stepTwo.output.incrementedValue * 3 } \n }, \n}); \n \n // Build the workflow \n const myWorkflow = new Workflow ({ \n name: \" my-workflow \", \n triggerSchema: z. object ({ \n inputValue: z. number (), \n }), \n}); \n Chaining the Steps and Executing the Workflow \n Now let’s chain the steps together. \n // sequential steps \n myWorkflow. step (stepOne). then (stepTwo). then (stepThree); \n \n myWorkflow. commit (); \n \n const { start } = myWorkflow. createRun (); \n \n const res = await start ({ triggerData: { inputValue: 90 } }); \n \n Creating a Workflow Parallel Steps",
+    "image": "https://mastra.ai/api/og/docs?title=Example:%20Sequential%20Steps%20|%20Workflows%20|%20Mastra%20Docs&description=Example%20of%20using%20Mastra%20to%20chain%20workflow%20steps%20in%20a%20specific%20sequence,%20passing%20data%20between%20them.",
+    "favicon": "https://mastra.ai/favicon.ico",
+    "extras": {
+        "links": [
+            "https://mastra.ai/en/examples/workflows/sequential-steps",
+            "https://mastra.ai/",
+            "https://mastra.ai/docs",
+            "https://mastra.ai/examples"
+        ]
+    }
+}

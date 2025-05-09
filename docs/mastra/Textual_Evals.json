@@ -1,0 +1,18 @@
+{
+    "id": "https://mastra.ai/docs/evals/textual-evals",
+    "title": "Textual Evals",
+    "url": "https://mastra.ai/docs/evals/textual-evals",
+    "publishedDate": "",
+    "author": "",
+    "text": "\n Textual evals use an LLM-as-judge methodology to evaluate agent outputs. This approach leverages language models to assess various aspects of text quality, similar to how a teaching assistant might grade assignments using a rubric. \n Each eval focuses on specific quality aspects and returns a score between 0 and 1, providing quantifiable metrics for non-deterministic AI outputs. \n Mastra provides several eval metrics for assessing Agent outputs. Mastra is not limited to these metrics, and you can also define your own evals. \n Why Use Textual Evals? \n Textual evals help ensure your agent: \n \n Produces accurate and reliable responses \n Uses context effectively \n Follows output requirements \n Maintains consistent quality over time \n \n Available Metrics \n Accuracy and Reliability \n These metrics evaluate how correct, truthful, and complete your agent’s answers are: \n \n hallucination: Detects facts or claims not present in provided context \n faithfulness: Measures how accurately responses represent provided context \n content-similarity: Evaluates consistency of information across different phrasings \n completeness: Checks if responses include all necessary information \n answer-relevancy: Assesses how well responses address the original query \n textual-difference: Measures textual differences between strings \n \n Understanding Context \n These metrics evaluate how well your agent uses provided context: \n \n context-position: Analyzes where context appears in responses \n context-precision: Evaluates whether context chunks are grouped logically \n context-relevancy: Measures use of appropriate context pieces \n contextual-recall: Assesses completeness of context usage \n \n Output Quality \n These metrics evaluate adherence to format and style requirements: \n \n tone: Measures consistency in formality, complexity, and style \n toxicity: Detects harmful or inappropriate content \n bias: Detects potential biases in the output \n prompt-alignment: Checks adherence to explicit instructions like length restrictions, formatting requirements, or other constraints \n summarization: Evaluates information retention and conciseness \n keyword-coverage: Assesses technical terminology usage \n Overview Custom Evals",
+    "image": "https://mastra.ai/api/og/docs?title=Textual%20Evals&description=Understand%20how%20Mastra%20uses%20LLM-as-judge%20methodology%20to%20evaluate%20text%20quality.",
+    "favicon": "https://mastra.ai/favicon.ico",
+    "extras": {
+        "links": [
+            "https://mastra.ai/en/docs/evals/textual-evals",
+            "https://mastra.ai/",
+            "https://mastra.ai/docs",
+            "https://mastra.ai/examples"
+        ]
+    }
+}

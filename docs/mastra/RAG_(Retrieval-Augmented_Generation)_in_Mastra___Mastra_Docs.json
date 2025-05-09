@@ -1,0 +1,16 @@
+{
+    "id": "https://mastra.ai/docs/rag/overview",
+    "title": "RAG (Retrieval-Augmented Generation) in Mastra | Mastra Docs",
+    "url": "https://mastra.ai/docs/rag/overview",
+    "author": "",
+    "text": "\n RAG in Mastra helps you enhance LLM outputs by incorporating relevant context from your own data sources, improving accuracy and grounding responses in real information. \n Mastra’s RAG system provides: \n \n Standardized APIs to process and embed documents \n Support for multiple vector stores \n Chunking and embedding strategies for optimal retrieval \n Observability for tracking embedding and retrieval performance \n \n Example \n To implement RAG, you process your documents into chunks, create embeddings, store them in a vector database, and then retrieve relevant context at query time. \n This example shows the essentials: initialize a document, create chunks, generate embeddings, store them, and query for similar content. \n Document Processing \n The basic building block of RAG is document processing. Documents can be chunked using various strategies (recursive, sliding window, etc.) and enriched with metadata. See the chunking and embedding doc. \n Vector Storage \n Mastra supports multiple vector stores for embedding persistence and similarity search, including pgvector, Pinecone, and Qdrant. See the vector database doc. \n Observability and Debugging \n Mastra’s RAG system includes observability features to help you optimize your retrieval pipeline: \n \n Track embedding generation performance and costs \n Monitor chunk quality and retrieval relevance \n Analyze query patterns and cache hit rates \n Export metrics to your observability platform \n \n See the OTel Configuration page for more details. \n More resources \n \n Chain of Thought RAG Example \n All RAG Examples (including different chunking strategies, embedding models, and vector stores) \n Suspend &amp; Resume Chunking and Embedding",
+    "image": "https://mastra.ai/api/og/docs?title=RAG%20(Retrieval-Augmented%20Generation)%20in%20Mastra%20%7C%20Mastra%20Docs",
+    "extras": {
+        "links": [
+            "https://mastra.ai/",
+            "https://mastra.ai/docs",
+            "https://mastra.ai/examples",
+            "https://mastra.ai/showcase"
+        ]
+    }
+}

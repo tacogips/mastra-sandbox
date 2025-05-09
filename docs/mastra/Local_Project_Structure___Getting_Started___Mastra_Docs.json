@@ -1,0 +1,16 @@
+{
+    "id": "https://mastra.ai/docs/getting-started/project-structure",
+    "title": "Local Project Structure | Getting Started | Mastra Docs",
+    "url": "https://mastra.ai/docs/getting-started/project-structure",
+    "author": "",
+    "text": "\n This page provides a guide for organizing folders and files in Mastra. Mastra is a modular framework, and you can use any of the modules separately or together. \n You could write everything in a single file (as we showed in the quick start), or separate each agent, tool, and workflow into their own files. \n We don’t enforce a specific folder structure, but we do recommend some best practices, and the CLI will scaffold a project with a sensible structure. \n Using the CLI \n is an interactive CLI that allows you to: \n \n Choose a directory for Mastra files: Specify where you want the Mastra files to be placed (default is ). \n Select components to install: Choose which components you want to include in your project:\n \n Agents \n Tools \n Workflows \n \n \n Select a default LLM provider: Choose from supported providers like OpenAI, Anthropic, or Groq. \n Include example code: Decide whether to include example code to help you get started. \n \n Example Project Structure \n Assuming you select all components and include example code, your project structure will look like this: \n Top-level Folders \n Top-level Files \n Installation Agents: Chef Michel",
+    "image": "https://mastra.ai/api/og/docs?title=Local%20Project%20Structure%20%7C%20Getting%20Started%20%7C%20Mastra%20Docs",
+    "extras": {
+        "links": [
+            "https://mastra.ai/",
+            "https://mastra.ai/docs",
+            "https://mastra.ai/examples",
+            "https://mastra.ai/showcase"
+        ]
+    }
+}

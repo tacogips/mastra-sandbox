@@ -1,0 +1,18 @@
+{
+    "id": "https://mastra.ai/docs/evals/running-in-ci",
+    "title": "Running in CI",
+    "url": "https://mastra.ai/docs/evals/running-in-ci",
+    "publishedDate": "",
+    "author": "",
+    "text": "Running Evals in CI \n Running evals in your CI pipeline helps bridge this gap by providing quantifiable metrics for measuring agent quality over time. \n Setting Up CI Integration \n We support any testing framework that supports ESM modules. For example, you can use Vitest , Jest  or Mocha  to run evals in your CI/CD pipeline. \n src/mastra/agents/index.test.ts import { describe, it, expect } from ' vitest '; \n import { evaluate } from \" @mastra/evals \"; \n import { ToneConsistencyMetric } from \" @mastra/evals/nlp \"; \n import { myAgent } from './index '; \n \n describe ( ' My Agent ', () =&gt; { \n it ( ' should validate tone consistency ', async () =&gt; { \n const metric = new ToneConsistencyMetric (); \n const result = await evaluate (myAgent, ' Hello, world! ', metric) \n \n expect (result.score). toBe ( 1); \n }); \n}); \n You will need to configure a testSetup and globalSetup script for your testing framework to capture the eval results. It allows us to show these results in your mastra dashboard. \n Framework Configuration \n Vitest Setup \n Add these files to your project to run evals in your CI/CD pipeline: \n import { globalSetup } from ' @mastra/evals '; \n \n export default function setup () { \n globalSetup () \n} \n import { beforeAll } from ' vitest '; \n import { attachListeners } from ' @mastra/evals '; \n \n beforeAll ( async () =&gt; { \n await attachListeners (); \n}); \n import { defineConfig } from ' vitest/config ' \n \n export default defineConfig ({ \n test: { \n globalSetup: './globalSetup.ts ', \n setupFiles: [ './testSetup.ts '], \n }, \n}) \n Storage Configuration \n To store eval results in Mastra Storage and capture results in the Mastra dashboard: \n import { beforeAll } from ' vitest '; \n import { attachListeners } from ' @mastra/evals '; \n import { mastra } from './your-mastra-setup '; \n \n beforeAll ( async () =&gt; { \n // Store evals in Mastra Storage (requires storage to be enabled) \n await attachListeners (mastra); \n}); \n With file storage, evals persist and can be queried later. With memory storage, evals are isolated to the test process. Custom Evals With Vercel AI SDK",
+    "image": "https://mastra.ai/api/og/docs?title=Running%20in%20CI&description=Learn%20how%20to%20run%20Mastra%20evals%20in%20your%20CI/CD%20pipeline%20to%20monitor%20agent%20quality%20over%20time.",
+    "favicon": "https://mastra.ai/favicon.ico",
+    "extras": {
+        "links": [
+            "https://mastra.ai/en/docs/evals/running-in-ci",
+            "https://mastra.ai/",
+            "https://mastra.ai/docs",
+            "https://mastra.ai/examples"
+        ]
+    }
+}

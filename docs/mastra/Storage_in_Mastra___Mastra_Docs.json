@@ -1,0 +1,18 @@
+{
+    "id": "https://mastra.ai/docs/storage/overview",
+    "title": "Storage in Mastra | Mastra Docs",
+    "url": "https://mastra.ai/docs/storage/overview",
+    "publishedDate": "",
+    "author": "",
+    "text": "MastraStorage \n MastraStorage provides a unified interface for managing: \n \n Suspended Workflows: the serialized state of suspended workflows (so they can be resumed later) \n Memory: threads and messages per resourceId in your application \n Traces: OpenTelemetry traces from all components of Mastra \n Eval Datasets: scores and scoring reasons from eval runs \n \n \n Mastra provides different storage providers, but you can treat them as interchangeable. Eg, you could use libsql in development but postgres in production, and your code will work the same both ways. \n Configuration \n Mastra can be configured with a default storage option: \n import { Mastra } from \" @mastra/core/mastra \"; \n import { LibSQLStore } from \" @mastra/libsql \"; \n \n const mastra = new Mastra ({ \n storage: new LibSQLStore ({ \n url: \" file:./mastra.db \", \n }), \n}); \n Data Schema \n Messages Stores conversation messages and their metadata. Each message belongs to a thread and contains the actual content along with metadata about the sender role and message type. \n Storage Providers \n Mastra supports the following providers: \n \n For local development, check out LibSQL Storage \n For production, check out PostgreSQL Storage \n For serverless deployments, check out Upstash Storage \n With CopilotKit Overview",
+    "image": "https://mastra.ai/api/og/docs?title=Storage%20in%20Mastra%20|%20Mastra%20Docs&description=Overview%20of%20Mastra%27s%20storage%20system%20and%20data%20persistence%20capabilities.",
+    "favicon": "https://mastra.ai/favicon.ico",
+    "extras": {
+        "links": [
+            "https://mastra.ai/en/docs/storage/overview",
+            "https://mastra.ai/",
+            "https://mastra.ai/docs",
+            "https://mastra.ai/examples"
+        ]
+    }
+}

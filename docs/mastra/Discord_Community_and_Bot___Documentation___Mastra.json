@@ -1,0 +1,17 @@
+{
+    "id": "https://mastra.ai/docs/community/discord",
+    "title": "Discord Community and Bot | Documentation | Mastra",
+    "url": "https://mastra.ai/docs/community/discord",
+    "author": "",
+    "text": "\n The Discord server has over 1000 members and serves as the main discussion forum for Mastra. The Mastra team monitors Discord during North American and European business hours, with community members active across other time zones. Join the Discord server . \n Discord MCP Bot \n In addition to community members, we have an (experimental!) Discord bot that can also help answer questions. It uses Model Context Protocol (MCP). You can ask it a question with /ask (either in public channels or DMs) and clear history (in DMs only) with /cleardm. Licensing",
+    "image": "https://mastra.ai/api/og/docs?title=Discord%20Community%20and%20Bot%20|%20Documentation%20|%20Mastra&description=Information%20about%20the%20Mastra%20Discord%20community%20and%20MCP%20bot.",
+    "favicon": "https://mastra.ai/favicon.ico",
+    "extras": {
+        "links": [
+            "https://mastra.ai/en/docs/community/discord",
+            "https://mastra.ai/",
+            "https://mastra.ai/docs",
+            "https://mastra.ai/examples"
+        ]
+    }
+}

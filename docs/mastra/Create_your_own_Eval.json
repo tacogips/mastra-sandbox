@@ -1,0 +1,17 @@
+{
+    "id": "https://mastra.ai/docs/evals/custom-eval",
+    "title": "Create your own Eval",
+    "url": "https://mastra.ai/docs/evals/custom-eval",
+    "publishedDate": "2005-03-03T00:00:00.000Z",
+    "author": "",
+    "text": "\n Creating your own eval is as easy as creating a new function. You simply create a class that extends the Metric class and implement the measure method. \n Basic example \n For a simple example of creating a custom metric that checks if the output contains certain words, see our Word Inclusion example. \n Creating a custom LLM-Judge \n A custom LLM judge helps evaluate specific aspects of your AI’s responses. Think of it like having an expert reviewer for your particular use case: \n \n Medical Q&amp;A → Judge checks for medical accuracy and safety \n Customer Service → Judge evaluates tone and helpfulness \n Code Generation → Judge verifies code correctness and style \n \n For a practical example, see how we evaluate Chef Michel’s recipes for gluten content in our Gluten Checker example. Textual Evals Running in CI",
+    "favicon": "https://mastra.ai/favicon.ico",
+    "extras": {
+        "links": [
+            "https://mastra.ai/docs/evals/custom-eval",
+            "https://mastra.ai/",
+            "https://mastra.ai/blog",
+            "https://mastra.ai/examples"
+        ]
+    }
+}

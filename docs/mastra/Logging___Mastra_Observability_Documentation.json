@@ -1,0 +1,18 @@
+{
+    "id": "https://mastra.ai/docs/observability/logging",
+    "title": "Logging | Mastra Observability Documentation",
+    "url": "https://mastra.ai/docs/observability/logging",
+    "publishedDate": "",
+    "author": "",
+    "text": "\n In Mastra, logs can detail when certain functions run, what input data they receive, and how they respond. \n Basic Setup \n Here’s a minimal example that sets up a console logger at the INFO level. This will print out informational messages and above (i.e., DEBUG, INFO, WARN, ERROR) to the console. \n import { Mastra } from \" @mastra/core \"; \n import { createLogger } from \" @mastra/core/logger \"; \n \n export const mastra = new Mastra ({ \n // Other Mastra configuration... \n logger: createLogger ({ \n name: \" Mastra \", \n level: \" info \", \n }), \n}); \n In this configuration: \n \n name: \"Mastra\" specifies the name to group logs under. \n level: \"info\" sets the minimum severity of logs to record. \n \n Configuration \n \n For more details on the options you can pass to createLogger(), see the createLogger reference documentation. \n Once you have a Logger instance, you can call its methods (e.g.,.info(),.warn(),.error()) in the Logger instance reference documentation. \n If you want to send your logs to an external service for centralized collection, analysis, or storage, you can configure other logger types such as Upstash Redis. Consult the createLogger reference documentation for details on parameters like url, token, and key when using the UPSTASH logger type. \n Observability Tracing",
+    "image": "https://mastra.ai/api/og/docs?title=Logging%20|%20Mastra%20Observability%20Documentation&description=Documentation%20on%20effective%20logging%20in%20Mastra,%20crucial%20for%20understanding%20application%20behavior%20and%20improving%20AI%20accuracy.",
+    "favicon": "https://mastra.ai/favicon.ico",
+    "extras": {
+        "links": [
+            "https://mastra.ai/en/docs/observability/logging",
+            "https://mastra.ai/",
+            "https://mastra.ai/docs",
+            "https://mastra.ai/examples"
+        ]
+    }
+}

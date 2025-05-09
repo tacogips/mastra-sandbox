@@ -1,0 +1,18 @@
+{
+    "id": "https://mastra.ai/examples/workflows/using-a-tool-as-a-step",
+    "title": "Example: Using a Tool as a Step | Workflows | Mastra Docs",
+    "url": "https://mastra.ai/examples/workflows/using-a-tool-as-a-step",
+    "publishedDate": "",
+    "author": "",
+    "text": "Tool as a Workflow step \n This example demonstrates how to create and integrate a custom tool as a workflow step, showing how to define input/output schemas and implement the tool’s execution logic. \n import { createTool } from ' @mastra/core/tools '; \n import { Workflow } from ' @mastra/core/workflows '; \n import { z } from ' zod '; \n \n const crawlWebpage = createTool ({ \n id: ' Crawl Webpage ', \n description: ' Crawls a webpage and extracts the text content ', \n inputSchema: z. object ({ \n url: z. string (). url (), \n }), \n outputSchema: z. object ({ \n rawText: z. string (), \n }), \n execute: async ({ context }) =&gt; { \n const response = await fetch (context.triggerData.url); \n const text = await response. text (); \n return { rawText: ' This is the text content of the webpage: ' + text }; \n }, \n}); \n \n const contentWorkflow = new Workflow ({ name: ' content-review ' }); \n \n contentWorkflow. step (crawlWebpage). commit (); \n \n const { start } = contentWorkflow. createRun (); \n \n const res = await start ({ triggerData: { url: ' https://example.com '} }); \n \n console. log (res.results); \n \n Calling an Agent Cyclical Dependencies",
+    "image": "https://mastra.ai/api/og/docs?title=Example:%20Using%20a%20Tool%20as%20a%20Step%20|%20Workflows%20|%20Mastra%20Docs&description=Example%20of%20using%20Mastra%20to%20integrate%20a%20custom%20tool%20as%20a%20step%20in%20a%20workflow.",
+    "favicon": "https://mastra.ai/favicon.ico",
+    "extras": {
+        "links": [
+            "https://mastra.ai/en/examples/workflows/using-a-tool-as-a-step",
+            "https://mastra.ai/",
+            "https://mastra.ai/docs",
+            "https://mastra.ai/examples"
+        ]
+    }
+}

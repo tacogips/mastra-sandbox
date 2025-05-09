@@ -1,0 +1,16 @@
+{
+    "id": "https://mastra.ai/docs/getting-started/installation",
+    "title": "Installing Mastra Locally | Getting Started | Mastra Docs",
+    "url": "https://mastra.ai/docs/getting-started/installation",
+    "author": "",
+    "text": "\n To run Mastra, you need access to an LLM. Typically, you’ll want to get an API key from an LLM provider such as OpenAI, Anthropic, or Google Gemini. You can also run Mastra with a local LLM using Ollama. \n Prerequisites \n \n Node.js or higher \n Access to a supported large language model (LLM) \n \n Automatic Installation \n \n Note: If you prefer to run the command with flags (non-interactive mode) and include the example code, you can use: \n This allows you to specify your preferences upfront without being prompted. \n Manual Installation \n \n Start the Mastra Server \n Mastra provides commands to serve your agents via REST endpoints \n Development Server \n Run the following command to start the Mastra server: \n If you have the mastra CLI installed, run: \n This command creates REST API endpoints for your agents. \n Test the Endpoint \n You can test the agent’s endpoint using or : \n Run from the command line \n If you’d like to directly call agents from the command line, you can create a script to get an agent and call it: \n Then, run the script to test that everything is set up correctly: \n This should output the agent’s response to your console. \n Introduction Project Structure",
+    "image": "https://mastra.ai/api/og/docs?title=Installing%20Mastra%20Locally%20%7C%20Getting%20Started%20%7C%20Mastra%20Docs",
+    "extras": {
+        "links": [
+            "https://mastra.ai/",
+            "https://mastra.ai/docs",
+            "https://mastra.ai/examples",
+            "https://mastra.ai/showcase"
+        ]
+    }
+}

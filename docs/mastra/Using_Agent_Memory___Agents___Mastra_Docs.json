@@ -1,0 +1,17 @@
+{
+    "id": "https://mastra.ai/docs/agents/agent-memory",
+    "title": "Using Agent Memory | Agents | Mastra Docs",
+    "url": "https://mastra.ai/docs/agents/agent-memory",
+    "author": "",
+    "text": "\n Agents in Mastra can leverage a powerful memory system to store conversation history, recall relevant information, and maintain persistent context across interactions. This allows agents to have more natural, stateful conversations. \n Enabling Memory for an Agent \n To enable memory, simply instantiate the Memory class and pass it to your agent’s configuration. You also need to install the memory package: \n npm install @mastra/memory@latest \n import { Agent } from \" @mastra/core/agent \"; \n import { Memory } from \" @mastra/memory \"; \n import { openai } from \" @ai-sdk/openai \"; \n \n // Basic memory setup \n const memory = new Memory (); \n \n const agent = new Agent ({ \n name: \" MyMemoryAgent \", \n instructions: \" You are a helpful assistant with memory. \", \n model: openai ( \" gpt-4o \"), \n memory: memory, // Attach the memory instance \n}); \n This basic setup uses default settings, including LibSQL for storage and FastEmbed for embeddings. For detailed setup instructions, see Memory. \n Using Memory in Agent Calls \n To utilize memory during interactions, you must provide resourceId and threadId when calling the agent’s stream() or generate() methods. \n \n resourceId: Typically identifies the user or entity (e.g., user_123). \n threadId: Identifies a specific conversation thread (e.g., support_chat_456). \n \n // Example agent call using memory \n await agent. stream ( \" Remember my favorite color is blue. \", { \n resourceId: \" user_alice \", \n threadId: \" preferences_thread \", \n}); \n \n // Later in the same thread... \n const response = await agent. stream ( \" What's my favorite color? \", { \n resourceId: \" user_alice \", \n threadId: \" preferences_thread \", \n}); \n // Agent will use memory to recall the favorite color. \n These IDs ensure that conversation history and context are correctly stored and retrieved for the appropriate user and conversation. \n Next Steps \n Keep exploring Mastra’s memory capabilities like threads, conversation history, semantic recall, and working memory. Overview Tools and MCP",
+    "image": "https://mastra.ai/api/og/docs?title=Using%20Agent%20Memory%20|%20Agents%20|%20Mastra%20Docs&description=Documentation%20on%20how%20agents%20in%20Mastra%20use%20memory%20to%20store%20conversation%20history%20and%20contextual%20information.",
+    "favicon": "https://mastra.ai/favicon.ico",
+    "extras": {
+        "links": [
+            "https://mastra.ai/en/docs/agents/agent-memory",
+            "https://mastra.ai/",
+            "https://mastra.ai/docs",
+            "https://mastra.ai/examples"
+        ]
+    }
+}

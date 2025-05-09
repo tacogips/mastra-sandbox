@@ -1,0 +1,18 @@
+{
+    "id": "https://mastra.ai/examples/workflows_vNext/agent-and-tool-interop",
+    "title": "Example: Using a Tool/Agent as a Step | Workflows | Mastra Docs",
+    "url": "https://mastra.ai/examples/workflows_vNext/agent-and-tool-interop",
+    "publishedDate": "1999-10-01T00:00:00.000Z",
+    "author": "",
+    "text": "Tool/Agent as a Workflow step \n This example demonstrates how to create and integrate a tool or an agent as a workflow step.\nMastra provides a createStep helper function which accepts either a step or agent and returns an object which satisfies the Step interface. \n Define Interop Workflow \n Defines a workflow which takes an agent and tool as a step. \n workflows/interop-workflow.ts import { createWorkflow, createStep } from ' @mastra/core/workflows/vNext ' \n import { weatherTool } from '../tools ' \n import { weatherReporterAgent } from '../agents ' \n import { z } from ' zod ' \n \n const fetchWeather = createStep (weatherTool) \n const reportWeather = createStep (weatherReporterAgent) \n \n const weatherWorkflow = createWorkflow ({ \n steps: [fetchWeather, reportWeather], \n id: ' weather-workflow ', \n inputSchema: z. object ({ \n location: z. string (). describe ( ' The city to get the weather for '), \n }), \n outputSchema: z. object ({ \n text: z. string (), \n }), \n}) \n . then (fetchWeather) \n . then ( \n createStep ({ \n id: ' report-weather ', \n inputSchema: fetchWeather.outputSchema, \n outputSchema: z. object ({ \n text: z. string (), \n }), \n execute: async ({ inputData, mastra }) =&gt; { \n const prompt = ' Forecast data: ' + JSON. stringify (inputData) \n const agent = mastra. getAgent ( ' weatherReporterAgent ') \n const result = await agent. generate ([ \n { \n role: ' user ', \n content: prompt, \n }, \n ]) \n return { text: result.text } \n }, \n }) \n ) \n \n weatherWorkflow. commit () \n \n export { weatherWorkflow } \n Register Workflow instance with Mastra class \n Register the workflow with the mastra instance. \n import { Mastra } from ' @mastra/core/mastra ' \n import { createLogger } from ' @mastra/core/logger ' \n import { weatherWorkflow } from './workflows ' \n \n const mastra = new Mastra ({ \n vnext_workflows: { \n weatherWorkflow, \n }, \n logger: createLogger ({ \n name: ' Mastra ', \n level: ' info ', \n }), \n}) \n \n export { mastra } \n Execute the workflow \n Here, we’ll get the weather workflow from the mastra instance, then create a run and execute the created run with the required inputData. \n import { mastra } from \"./ \" \n \n const workflow = mastra. vnext_getWorkflow ( ' weatherWorkflow ') \n const run = workflow. createRun () \n \n const result = await run. start ({ inputData: { location: \" Lagos \" } }) \n console. dir (result, { depth: null }) Calling an Agent Human in the Loop",
+    "image": "https://mastra.ai/api/og/docs?title=Example:%20Using%20a%20Tool/Agent%20as%20a%20Step%20|%20Workflows%20|%20Mastra%20Docs&description=Example%20of%20using%20Mastra%20to%20integrate%20a%20tool%20or%20an%20agent%20as%20a%20step%20in%20a%20workflow.",
+    "favicon": "https://mastra.ai/favicon.ico",
+    "extras": {
+        "links": [
+            "https://mastra.ai/en/examples/workflows_vNext/agent-and-tool-interop",
+            "https://mastra.ai/",
+            "https://mastra.ai/docs",
+            "https://mastra.ai/examples"
+        ]
+    }
+}

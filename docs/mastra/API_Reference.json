@@ -1,0 +1,17 @@
+{
+    "id": "https://mastra.ai/reference",
+    "title": "API Reference",
+    "url": "https://mastra.ai/reference",
+    "author": "",
+    "text": "\n The Reference section provides documentation of Mastra’s API, including parameters, types and usage examples. \n Mastra Class",
+    "image": "https://mastra.ai/api/og/docs?title=API%20Reference&description=Mastra%20API%20Reference",
+    "favicon": "https://mastra.ai/favicon.ico",
+    "extras": {
+        "links": [
+            "https://mastra.ai/en/reference",
+            "https://mastra.ai/",
+            "https://mastra.ai/docs",
+            "https://mastra.ai/examples"
+        ]
+    }
+}

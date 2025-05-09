@@ -1,0 +1,18 @@
+{
+    "id": "https://mastra.ai/examples/workflows/cyclical-dependencies",
+    "title": "Example: Cyclical Dependencies | Workflows | Mastra Docs",
+    "url": "https://mastra.ai/examples/workflows/cyclical-dependencies",
+    "publishedDate": "",
+    "author": "",
+    "text": "Workflow with Cyclical dependencies \n Workflows support cyclical dependencies where steps can loop back based on conditions. The example below shows how to use conditional logic to create loops and handle repeated execution. \n import { Workflow, Step } from ' @mastra/core '; \n import { z } from ' zod '; \n \n async function main () { \n const doubleValue = new Step ({ \n id: ' doubleValue ', \n description: ' Doubles the input value ', \n inputSchema: z. object ({ \n inputValue: z. number (), \n }), \n outputSchema: z. object ({ \n doubledValue: z. number (), \n }), \n execute: async ({ context }) =&gt; { \n const doubledValue = context.inputValue * 2; \n return { doubledValue }; \n }, \n }); \n \n const incrementByOne = new Step ({ \n id: ' incrementByOne ', \n description: ' Adds 1 to the input value ', \n outputSchema: z. object ({ \n incrementedValue: z. number (), \n }), \n execute: async ({ context }) =&gt; { \n const valueToIncrement = context?. getStepResult &lt;{ firstValue: number }&gt;( ' trigger ')?.firstValue; \n if (! valueToIncrement) throw new Error ( ' No value to increment provided '); \n const incrementedValue = valueToIncrement + 1; \n return { incrementedValue }; \n }, \n }); \n \n const cyclicalWorkflow = new Workflow ({ \n name: ' cyclical-workflow ', \n triggerSchema: z. object ({ \n firstValue: z. number (), \n }), \n }); \n \n cyclicalWorkflow \n . step (doubleValue, { \n variables: { \n inputValue: { \n step: ' trigger ', \n path: ' firstValue ', \n }, \n }, \n }) \n . then (incrementByOne) \n . after (doubleValue) \n . step (doubleValue, { \n variables: { \n inputValue: { \n step: doubleValue, \n path: ' doubledValue ', \n }, \n }, \n }) \n . commit (); \n \n const { runId, start } = cyclicalWorkflow. createRun (); \n \n console. log ( ' Run ', runId); \n \n const res = await start ({ triggerData: { firstValue: 6 } }); \n \n console. log (res.results); \n} \n \n main (); \n \n Using a Tool as a Step Workflow Variables",
+    "image": "https://mastra.ai/api/og/docs?title=Example:%20Cyclical%20Dependencies%20|%20Workflows%20|%20Mastra%20Docs&description=Example%20of%20using%20Mastra%20to%20create%20workflows%20with%20cyclical%20dependencies%20and%20conditional%20loops.",
+    "favicon": "https://mastra.ai/favicon.ico",
+    "extras": {
+        "links": [
+            "https://mastra.ai/en/examples/workflows/cyclical-dependencies",
+            "https://mastra.ai/",
+            "https://mastra.ai/docs",
+            "https://mastra.ai/examples"
+        ]
+    }
+}

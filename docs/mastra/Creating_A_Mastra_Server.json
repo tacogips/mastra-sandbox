@@ -1,0 +1,17 @@
+{
+    "id": "https://mastra.ai/docs/deployment/server",
+    "title": "Creating A Mastra Server",
+    "url": "https://mastra.ai/docs/deployment/server",
+    "author": "",
+    "text": "\n While developing or when you deploy a Mastra application, it runs as an HTTP server that exposes your agents, workflows, and other functionality as API endpoints. This page explains how to configure and customize the server behavior. \n Server Architecture \n Mastra uses Hono  as its underlying HTTP server framework. When you build a Mastra application using mastra build, it generates a Hono-based HTTP server in the.mastra directory. \n The server provides: \n \n API endpoints for all registered agents \n API endpoints for all registered workflows \n Custom api route supports \n Custom middleware support \n Configuration of timeout \n Configuration of port \n Configuration of body limit \n \n See the Middleware and\n Custom API Routes pages for details on\nadding additional server behaviour. \n Server configuration \n You can configure server port and timeout in the Mastra instance. \n import { Mastra } from \" @mastra/core \"; \n \n export const mastra = new Mastra ({ \n server: { \n port: 3000, // Defaults to 4111 \n timeout: 10000, // Defaults to 30000 (30s) \n }, \n}); \n Custom CORS Config \n Mastra allows you to configure CORS (Cross-Origin Resource Sharing) settings for your server. \n import { Mastra } from ' @mastra/core '; \n \n export const mastra = new Mastra ({ \n server: { \n cors: { \n origin: [ ' https://example.com '], // Allow specific origins or '*' for all \n allowMethods: [ ' GET ', ' POST ', ' PUT ', ' DELETE ', ' OPTIONS '], \n allowHeaders: [ ' Content-Type ', ' Authorization '], \n credentials: false, \n } \n } \n}); \n Deployment \n Since Mastra builds to a standard Node.js server, you can deploy to any platform that runs Node.js applications: \n \n Cloud VMs (AWS EC2, DigitalOcean Droplets, GCP Compute Engine) \n Container platforms (Docker, Kubernetes) \n Platform as a Service (Heroku, Railway) \n Self-hosted servers \n \n Building \n Build the application: \n # Build from current directory \n mastra build \n \n # Or specify a directory \n mastra build --dir ./my-project \n The build process: \n \n Locates entry file ( src/mastra/index.ts or src/mastra/index.js) \n Creates.mastra output directory \n Bundles code using Rollup with tree shaking and source maps \n Generates Hono  HTTP server \n \n See mastra build for all options. \n Running the Server \n Start the HTTP server: \n node .mastra/output/index.mjs \n Enable Telemetry for build output \n Load instrumentation for the build output like so: \n node --import=./.mastra/output/instrumentation.mjs .mastra/output/index.mjs \n Serverless Deployment \n Mastra also supports serverless deployment on Cloudflare Workers, Vercel, and Netlify. \n See our Serverless Deployment guide for setup instructions. Overview Middleware",
+    "image": "https://mastra.ai/api/og/docs?title=Creating%20A%20Mastra%20Server&description=Configure%20and%20customize%20the%20Mastra%20server%20with%20middleware%20and%20other%20options",
+    "favicon": "https://mastra.ai/favicon.ico",
+    "extras": {
+        "links": [
+            "https://mastra.ai/en/docs/deployment/server",
+            "https://mastra.ai/",
+            "https://mastra.ai/docs",
+            "https://mastra.ai/examples"
+        ]
+    }
+}

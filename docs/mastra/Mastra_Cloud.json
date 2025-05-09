@@ -1,0 +1,17 @@
+{
+    "id": "https://mastra.ai/docs/mastra-cloud/overview",
+    "title": "Mastra Cloud",
+    "url": "https://mastra.ai/docs/mastra-cloud/overview",
+    "author": "",
+    "text": "\n Mastra Cloud is a deployment service that runs, manages, and monitors Mastra applications. It works with standard Mastra projects and handles deployment, scaling, and operational tasks. \n Core Functionality \n \n Atomic Deployments - Agents and workflows deploy as a single unit \n Project Organization - Group agents and workflows into projects with assigned URLs \n Environment Variables - Store configuration securely by environment \n Testing Console - Send messages to agents through a web interface \n Execution Tracing - Record agent interactions and tool calls \n Workflow Visualization - Display workflow steps and execution paths \n Logs - Standard logging output for debugging \n Platform Compatibility - Uses the same infrastructure as Cloudflare, Vercel, and Netlify deployers \n \n Dashboard Components \n The Mastra Cloud dashboard contains: \n \n Projects List - All projects in the account \n Project Details - Deployments, environment variables, and access URLs \n Deployment History - Record of deployments with timestamps and status \n Agent Inspector - Agent configuration view showing models, tools, and system prompts \n Testing Console - Interface for sending messages to agents \n Trace Explorer - Records of tool calls, parameters, and responses \n Workflow Viewer - Diagram of workflow steps and connections \n \n Technical Implementation \n Mastra Cloud runs on the same core code as the platform-specific deployers with these modifications: \n \n Edge Network Distribution - Geographically distributed execution \n Dynamic Resource Allocation - Adjusts compute resources based on traffic \n Mastra-specific Runtime - Runtime optimized for agent execution \n Standard Deployment API - Consistent deployment interface across environments \n Tracing Infrastructure - Records all agent and workflow execution steps \n \n Use Cases \n Common usage patterns: \n \n Deploying applications without managing infrastructure \n Maintaining staging and production environments \n Monitoring agent behavior across many requests \n Testing agent responses through a web interface \n Deploying to multiple regions \n \n Setup Process \n \n Configure a Mastra Cloud project \n Deploy code \n View execution traces \n The Mastra Client Setting Up a Project",
+    "image": "https://mastra.ai/api/og/docs?title=Mastra%20Cloud&description=Deployment%20and%20monitoring%20service%20for%20Mastra%20applications",
+    "favicon": "https://mastra.ai/favicon.ico",
+    "extras": {
+        "links": [
+            "https://mastra.ai/en/docs/mastra-cloud/overview",
+            "https://mastra.ai/",
+            "https://mastra.ai/docs",
+            "https://mastra.ai/examples"
+        ]
+    }
+}

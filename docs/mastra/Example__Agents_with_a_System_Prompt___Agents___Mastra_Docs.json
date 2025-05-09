@@ -1,0 +1,18 @@
+{
+    "id": "https://mastra.ai/examples/agents/system-prompt",
+    "title": "Example: Agents with a System Prompt | Agents | Mastra Docs",
+    "url": "https://mastra.ai/examples/agents/system-prompt",
+    "publishedDate": "",
+    "author": "",
+    "text": "Giving an Agent a System Prompt \n When building AI agents, you often need to give them specific instructions and capabilities to handle specialized tasks effectively. System prompts allow you to define an agent’s personality, knowledge domain, and behavioral guidelines. This example shows how to create an AI agent with custom instructions and integrate it with a dedicated tool for retrieving verified information. \n import { openai } from \" @ai-sdk/openai \"; \n import { Agent } from \" @mastra/core/agent \"; \n import { createTool } from \" @mastra/core/tools \"; \n \n import { z } from \" zod \"; \n \n const instructions = ` You are a helpful cat expert assistant. When discussing cats, you should always include an interesting cat fact. \n \n Your main responsibilities: \n 1. Answer questions about cats \n 2. Use the catFact tool to provide verified cat facts \n 3. Incorporate the cat facts naturally into your responses \n \n Always use the catFact tool at least once in your responses to ensure accuracy. `; \n \n const getCatFact = async () =&gt; { \n const { fact } = ( await fetch ( \" https://catfact.ninja/fact \"). then ((res) =&gt; \n res. json (), \n )) as { \n fact: string; \n }; \n \n return fact; \n}; \n \n const catFact = createTool ({ \n id: \" Get cat facts \", \n inputSchema: z. object ({}), \n description: \" Fetches cat facts \", \n execute: async () =&gt; { \n console. log ( \" using tool to fetch cat fact \"); \n return { \n catFact: await getCatFact (), \n }; \n }, \n}); \n \n const catOne = new Agent ({ \n name: \" cat-one \", \n instructions: instructions, \n model: openai ( \" gpt-4o-mini \"), \n tools: { \n catFact, \n }, \n}); \n \n const result = await catOne. generate ( \" Tell me a cat fact \"); \n \n console. log (result.text); \n \n Overview Agentic Workflows",
+    "image": "https://mastra.ai/api/og/docs?title=Example:%20Agents%20with%20a%20System%20Prompt%20|%20Agents%20|%20Mastra%20Docs&description=Example%20of%20creating%20an%20AI%20agent%20in%20Mastra%20with%20a%20system%20prompt%20to%20define%20its%20personality%20and%20capabilities.",
+    "favicon": "https://mastra.ai/favicon.ico",
+    "extras": {
+        "links": [
+            "https://mastra.ai/en/examples/agents/system-prompt",
+            "https://mastra.ai/",
+            "https://mastra.ai/docs",
+            "https://mastra.ai/examples"
+        ]
+    }
+}

@@ -1,0 +1,16 @@
+{
+    "id": "https://mastra.ai/docs/workflows/control-flow",
+    "title": "Branching, Merging, Conditions | Workflows | Mastra Docs",
+    "url": "https://mastra.ai/docs/workflows/control-flow",
+    "author": "",
+    "text": "Control Flow in Workflows: Branching, Merging, and Conditions \n When you create a multi-step process, you may need to run steps in parallel, chain them sequentially, or follow different paths based on outcomes. This page describes how you can manage branching, merging, and conditions to construct workflows that meet your logic requirements. The code snippets show the key patterns for structuring complex control flow. \n Parallel Execution \n You can run multiple steps at the same time if they don’t depend on each other. This approach can speed up your workflow when steps perform independent tasks. The code below shows how to add two steps in parallel: \n See the Parallel Steps example for more details. \n Sequential Execution \n Sometimes you need to run steps in strict order to ensure outputs from one step become inputs for the next. Use .then() to link dependent operations. The code below shows how to chain steps sequentially: \n See the Sequential Steps example for more details. \n Branching and Merging Paths \n When different outcomes require different paths, branching is helpful. You can also merge paths later once they complete. The code below shows how to branch after stepA and later converge on stepF: \n In this example: \n \n stepA leads to stepB, then to stepD. \n Separately, stepA also triggers stepC, which in turn leads to stepE. \n The workflow waits for both stepD and stepE to finish before proceeding to stepF. \n \n See the Branching Paths example for more details. \n Cyclical Dependencies \n You can loop back to earlier steps based on conditions, allowing you to repeat tasks until certain results are achieved. The code below shows a workflow that repeats fetchData when a status is “retry”: \n If processData returns “success,” finalizeData runs. If it returns “retry,” the workflow loops back to fetchData. \n See the Cyclical Dependencies example for more details. \n Use the when property to control whether a step runs based on data from previous steps. Below are three ways to specify conditions. \n Option 1: Function \n Option 2: Query Object \n Option 3: Simple Path Comparison \n Accessing Previous Step Results \n Steps access data from previous steps through the object. The context contains a record of all step results and their payloads. \n Using getStepPayload \n retrieves a step’s output with type safety: \n Using Path Notation \n Path notation accesses step results through the machine context. For example, to access the status of the step: \n The context object maintains type information when used with TypeScript. Nested objects in step outputs can be accessed with either method. Steps Suspend &amp; Resume",
+    "image": "https://mastra.ai/api/og/docs?title=Branching%2C%20Merging%2C%20Conditions%20%7C%20Workflows%20%7C%20Mastra%20Docs",
+    "extras": {
+        "links": [
+            "https://mastra.ai/",
+            "https://mastra.ai/docs",
+            "https://mastra.ai/examples",
+            "https://mastra.ai/showcase"
+        ]
+    }
+}

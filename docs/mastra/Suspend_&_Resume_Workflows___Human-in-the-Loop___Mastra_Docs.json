@@ -1,0 +1,16 @@
+{
+    "id": "https://mastra.ai/docs/workflows/suspend-and-resume",
+    "title": "Suspend & Resume Workflows | Human-in-the-Loop | Mastra Docs",
+    "url": "https://mastra.ai/docs/workflows/suspend-and-resume",
+    "author": "",
+    "text": "\n Complex workflows often need to pause execution while waiting for external input or resources. \n Mastra’s suspend and resume features let you pause workflow execution at any step, persist the workflow state, and continue when ready. \n When to Use Suspend/Resume \n Common scenarios for suspending workflows include: \n \n Waiting for human approval or input \n Pausing until external API resources become available \n Collecting additional data needed for later steps \n Rate limiting or throttling expensive operations \n \n Basic Suspend Example \n Here’s a simple workflow that suspends when a value is too low and resumes when given a higher value: \n Watching and Resuming \n To handle suspended workflows, use the method to monitor workflow status and to continue execution: \n \n See the Suspend and Resume Example for a complete working example \n Check the Step Class Reference for suspend/resume API details \n Review Workflow Observability for monitoring suspended workflows \n Control Flow Overview",
+    "image": "https://mastra.ai/api/og/docs?title=Suspend%20%26%20Resume%20Workflows%20%7C%20Human-in-the-Loop%20%7C%20Mastra%20Docs",
+    "extras": {
+        "links": [
+            "https://mastra.ai/",
+            "https://mastra.ai/docs",
+            "https://mastra.ai/examples",
+            "https://mastra.ai/showcase"
+        ]
+    }
+}

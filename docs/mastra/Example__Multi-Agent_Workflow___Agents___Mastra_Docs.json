@@ -1,0 +1,18 @@
+{
+    "id": "https://mastra.ai/examples/agents/multi-agent-workflow",
+    "title": "Example: Multi-Agent Workflow | Agents | Mastra Docs",
+    "url": "https://mastra.ai/examples/agents/multi-agent-workflow",
+    "publishedDate": "2024-10-22T00:00:00.000Z",
+    "author": "",
+    "text": "\n This example demonstrates how to create an agentic workflow with work product being passed between multiple agents with a worker agent and a supervisor agent. \n In this example, we create a sequential workflow that calls two agents in order: \n \n A Copywriter agent that writes the initial blog post \n An Editor agent that refines the content \n \n First, import the required dependencies: \n import { openai } from \" @ai-sdk/openai \"; \n import { anthropic } from \" @ai-sdk/anthropic \"; \n import { Agent } from \" @mastra/core/agent \"; \n import { Step, Workflow } from \" @mastra/core/workflows \"; \n import { z } from \" zod \"; \n Create the copywriter agent that will generate the initial blog post: \n const copywriterAgent = new Agent ({ \n name: \" Copywriter \", \n instructions: \" You are a copywriter agent that writes blog post copy. \", \n model: anthropic ( \" claude-3-5-sonnet-20241022 \"), \n}); \n Define the copywriter step that executes the agent and handles the response: \n const copywriterStep = new Step ({ \n id: \" copywriterStep \", \n execute: async ({ context }) =&gt; { \n if (! context?.triggerData?.topic) { \n throw new Error ( \" Topic not found in trigger data \"); \n } \n const result = await copywriterAgent. generate ( \n ` Create a blog post about ${ context.triggerData.topic}`, \n ); \n console. log ( \" copywriter result \", result.text); \n return { \n copy: result.text, \n }; \n }, \n}); \n Set up the editor agent to refine the copywriter’s content: \n const editorAgent = new Agent ({ \n name: \" Editor \", \n instructions: \" You are an editor agent that edits blog post copy. \", \n model: openai ( \" gpt-4o-mini \"), \n}); \n Create the editor step that processes the copywriter’s output: \n const editorStep = new Step ({ \n id: \" editorStep \", \n execute: async ({ context }) =&gt; { \n const copy = context?. getStepResult &lt;{ copy: number }&gt;( \" copywriterStep \")?.copy; \n \n const result = await editorAgent. generate ( \n ` Edit the following blog post only returning the edited copy: ${ copy}`, \n ); \n console. log ( \" editor result \", result.text); \n return { \n copy: result.text, \n }; \n }, \n}); \n Configure the workflow and execute the steps: \n const myWorkflow = new Workflow ({ \n name: \" my-workflow \", \n triggerSchema: z. object ({ \n topic: z. string (), \n }), \n}); \n \n // Run steps sequentially. \n myWorkflow. step (copywriterStep). then (editorStep). commit (); \n \n const { runId, start } = myWorkflow. createRun (); \n \n const res = await start ({ \n triggerData: { topic: \" React JavaScript frameworks \" }, \n}); \n console. log ( \" Results: \", res.results); \n \n Hierarchical Multi-Agent System Bird Checker",
+    "image": "https://mastra.ai/api/og/docs?title=Example:%20Multi-Agent%20Workflow%20|%20Agents%20|%20Mastra%20Docs&description=Example%20of%20creating%20an%20agentic%20workflow%20in%20Mastra,%20where%20work%20product%20is%20passed%20between%20multiple%20agents.",
+    "favicon": "https://mastra.ai/favicon.ico",
+    "extras": {
+        "links": [
+            "https://mastra.ai/en/examples/agents/multi-agent-workflow",
+            "https://mastra.ai/",
+            "https://mastra.ai/docs",
+            "https://mastra.ai/examples"
+        ]
+    }
+}

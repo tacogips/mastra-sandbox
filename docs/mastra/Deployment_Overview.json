@@ -1,0 +1,17 @@
+{
+    "id": "https://mastra.ai/docs/deployment/overview",
+    "title": "Deployment Overview",
+    "url": "https://mastra.ai/docs/deployment/overview",
+    "author": "",
+    "text": "\n Mastra offers multiple deployment options to suit your application’s needs, from fully-managed solutions to self-hosted options. This guide will help you understand the available deployment paths and choose the right one for your project. \n Deployment Options \n Mastra Cloud \n Mastra Cloud is a deployment platform that connects to your GitHub repository, automatically deploys on code changes, and provides monitoring tools. It includes: \n \n GitHub repository integration \n Deployment on git push \n Agent testing interface \n Comprehensive logs and traces \n Custom domains for each project \n \n View Mastra Cloud documentation → \n With a Server \n You can deploy Mastra as a standard Node.js HTTP server, which gives you full control over your infrastructure and deployment environment. \n \n Custom API routes and middleware \n Configurable CORS and authentication \n Deploy to VMs, containers, or PaaS platforms \n Ideal for integrating with existing Node.js applications \n \n Server deployment guide → \n Serverless Platforms \n Mastra provides platform-specific deployers for popular serverless platforms, enabling you to deploy your application with minimal configuration. \n \n Deploy to Cloudflare Workers, Vercel, or Netlify \n Platform-specific optimizations \n Simplified deployment process \n Automatic scaling through the platform \n \n Serverless deployment guide → \n Client Configuration \n Once your Mastra application is deployed, you’ll need to configure your client to communicate with it. The Mastra Client SDK provides a simple and type-safe interface for interacting with your Mastra server. \n \n Type-safe API interactions \n Authentication and request handling \n Retries and error handling \n Support for streaming responses \n \n Client configuration guide → \n Choosing a Deployment Option \n Option Best For Key Benefits Mastra Cloud Teams wanting to ship quickly without infrastructure concerns Fully-managed, automatic scaling, built-in observability Server Deployment Teams needing maximum control and customization Full control, custom middleware, integrate with existing apps Serverless Platforms Teams already using Vercel, Netlify, or Cloudflare Platform integration, simplified deployment, automatic scaling Development Environment With a Server",
+    "image": "https://mastra.ai/api/og/docs?title=Deployment%20Overview&description=Learn%20about%20different%20deployment%20options%20for%20your%20Mastra%20applications",
+    "favicon": "https://mastra.ai/favicon.ico",
+    "extras": {
+        "links": [
+            "https://mastra.ai/en/docs/deployment/overview",
+            "https://mastra.ai/",
+            "https://mastra.ai/docs",
+            "https://mastra.ai/examples"
+        ]
+    }
+}

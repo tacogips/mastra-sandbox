@@ -1,0 +1,16 @@
+{
+    "id": "https://mastra.ai/docs/rag/chunking-and-embedding",
+    "title": "Chunking and Embedding Documents | RAG | Mastra Docs",
+    "url": "https://mastra.ai/docs/rag/chunking-and-embedding",
+    "author": "",
+    "text": "\n Before processing, create a MDocument instance from your content. You can initialize it from various formats: \n Step 1: Document Processing \n Use to split documents into manageable pieces. Mastra supports multiple chunking strategies optimized for different document types: \n \n: Smart splitting based on content structure \n: Simple character-based splits \n: Token-aware splitting \n: Markdown-aware splitting \n: HTML structure-aware splitting \n: JSON structure-aware splitting \n: LaTeX structure-aware splitting \n \n Here’s an example of how to use the strategy: \n Note: Metadata extraction may use LLM calls, so ensure your API key is set. \n We go deeper into chunking strategies in our chunk documentation. \n Step 2: Embedding Generation \n Transform chunks into embeddings using your preferred provider. Mastra supports both OpenAI and Cohere embeddings: \n Using OpenAI \n Using Cohere \n The embedding functions return vectors, arrays of numbers representing the semantic meaning of your text, ready for similarity searches in your vector database. \n Example: Complete Pipeline \n Here’s an example showing document processing and embedding generation with both providers: \n This example demonstrates how to process a document, split it into chunks, generate embeddings with both OpenAI and Cohere, and store the results in a vector database. \n For more examples of different chunking strategies and embedding configurations, see: \n \n Adjust Chunk Size \n Adjust Chunk Delimiters \n Embed Text with Cohere \n Overview Vector Databases",
+    "image": "https://mastra.ai/api/og/docs?title=Chunking%20and%20Embedding%20Documents%20%7C%20RAG%20%7C%20Mastra%20Docs",
+    "extras": {
+        "links": [
+            "https://mastra.ai/",
+            "https://mastra.ai/docs",
+            "https://mastra.ai/examples",
+            "https://mastra.ai/showcase"
+        ]
+    }
+}

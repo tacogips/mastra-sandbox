@@ -1,0 +1,16 @@
+{
+    "id": "https://mastra.ai/docs/local-dev/mastra-dev",
+    "title": "Inspecting Agents with `mastra dev` | Mastra Local Dev Docs",
+    "url": "https://mastra.ai/docs/local-dev/mastra-dev",
+    "author": "",
+    "text": "Inspecting agents and workflows with \n The command launches a development server that serves your Mastra application locally. \n REST API Endpoints \n spins up REST API endpoints for your agents and workflows, such as: \n \n \n \n \n \n \n \n By default, the server runs at http://localhost:4111, but you can change the port with the flag. \n Using the Client SDK \n The easiest way to interact with your local Mastra server is through our TypeScript/JavaScript Client SDK. Install it with: \n Then configure it to point to your local server: \n The client SDK provides type-safe wrappers for all API endpoints, making it much easier to develop and test your Mastra applications locally. \n UI Playground \n creates a UI with an agent chat interface, a workflow visualizer and a tool playground. \n OpenAPI Specification \n provides an OpenAPI spec at: \n \n \n \n Summary \n makes it easy to develop, debug, and iterate on your AI logic in a self-contained environment before deploying to production. \n \n Mastra Dev reference \n Client SDK documentation \n Creating Projects Integrations",
+    "image": "https://mastra.ai/api/og/docs?title=Inspecting%20Agents%20with%20%60mastra%20dev%60%20%7C%20Mastra%20Local%20Dev%20Docs",
+    "extras": {
+        "links": [
+            "https://mastra.ai/",
+            "https://mastra.ai/docs",
+            "https://mastra.ai/examples",
+            "https://mastra.ai/showcase"
+        ]
+    }
+}

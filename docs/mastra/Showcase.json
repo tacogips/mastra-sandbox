@@ -1,0 +1,16 @@
+{
+    "id": "https://mastra.ai/showcase",
+    "title": "Showcase",
+    "url": "https://mastra.ai/showcase",
+    "author": "",
+    "text": "Check out these applications built with Mastra. Audiofeed Audiofeed repurposes your content into audio and video. Bird Checker Bird Checker is a bird identification app. OpenAPI Spec Writer Generate an open api spec from your documentation url. Crypto Chatbot You can ask about current crypto prices and trends in the cryptocurrency market.",
+    "image": "https://mastra.ai/api/og/docs?title=Showcase",
+    "extras": {
+        "links": [
+            "https://mastra.ai/",
+            "https://mastra.ai/docs",
+            "https://mastra.ai/examples",
+            "https://mastra.ai/showcase"
+        ]
+    }
+}

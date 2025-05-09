@@ -1,0 +1,16 @@
+{
+    "id": "https://mastra.ai/docs/deployment/deployment",
+    "title": "Deployment",
+    "url": "https://mastra.ai/docs/deployment/deployment",
+    "author": "",
+    "text": "Deploying Mastra Applications \n Mastra applications can be deployed in two ways: \n \n Direct Platform Deployment: Using platform-specific deployers for Cloudflare Workers, Vercel, or Netlify \n Universal Deployment: Using to generate a standard Node.js server that can run anywhere \n \n Prerequisites \n Before you begin, ensure you have: \n \n Node.js installed (version 18 or higher is recommended) \n If using a platform-specific deployer:\n \n An account with your chosen platform \n Required API keys or credentials \n \n \n \n Direct Platform Deployment \n Platform-specific deployers handle configuration and deployment for: \n \n Cloudflare Workers \n Vercel \n Netlify \n \n Installing Deployers \n Configuring Deployers \n Configure the deployer in your entry file: \n Deployer Configuration \n Cloudflare Deployer \n Vercel Deployer \n Netlify Deployer \n Universal Deployment \n Since Mastra builds to a standard Node.js server, you can deploy to any platform that runs Node.js applications: \n \n Cloud VMs (AWS EC2, DigitalOcean Droplets, GCP Compute Engine) \n Container platforms (Docker, Kubernetes) \n Platform as a Service (Heroku, Railway) \n Self-hosted servers \n \n Building \n Build the application: \n The build process: \n \n Locates entry file ( or ) \n Creates output directory \n Bundles code using Rollup with tree shaking and source maps \n Generates Hono HTTP server \n \n See for all options. \n Running the Server \n Start the HTTP server: \n Environment Variables \n Required variables: \n \n Platform deployer variables (if using platform deployers):\n \n Platform credentials \n \n \n Agent API keys:\n \n \n \n \n \n Server configuration (for universal deployment):\n \n: HTTP server port (default: 3000) \n: Server host (default: 0.0.0.0) \n \n \n \n Platform Documentation \n Platform deployment references: \n \n Cloudflare Workers \n Vercel \n Netlify \n Logging and Tracing Overview",
+    "image": "https://mastra.ai/api/og/docs?title=Deployment",
+    "extras": {
+        "links": [
+            "https://mastra.ai/",
+            "https://mastra.ai/docs",
+            "https://mastra.ai/examples",
+            "https://mastra.ai/showcase"
+        ]
+    }
+}

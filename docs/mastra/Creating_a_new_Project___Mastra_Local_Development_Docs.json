@@ -1,0 +1,17 @@
+{
+    "id": "https://mastra.ai/docs/local-dev/creating-a-new-project",
+    "title": "Creating a new Project | Mastra Local Development Docs",
+    "url": "https://mastra.ai/docs/local-dev/creating-a-new-project",
+    "author": "",
+    "text": "Docs Local Dev Creating a New Project \n You can create a new project using the create-mastra package: \n You can also create a new project by using the mastra CLI directly: \n npm install -g mastra@latest \n mastra create \n Interactive Setup \n Running commands without arguments starts a CLI prompt for: \n \n Project name \n Component selection \n LLM provider configuration \n API key setup \n Example code inclusion \n \n Non-Interactive Setup \n To initialize mastra in non-interactive mode use the following command arguments: \n Arguments: \n --components Specify components: agents, tools, workflows \n --llm-provider LLM provider: openai, anthropic, groq, google, or cerebras \n --add-example Include example implementation \n --llm-api-key Provider API key \n --project-name Project name that will be used in package.json and as the project directory name \n Generated project structure: \n my-project/ \n ├── src/ \n │ └── mastra/ \n │ └── index.ts # Mastra entry point \n ├── package.json \n └── tsconfig.json Retrieval Add to an Existing Project",
+    "image": "https://mastra.ai/api/og/docs?title=Creating%20a%20new%20Project%20|%20Mastra%20Local%20Development%20Docs&description=Create%20new%20Mastra%20projects%20or%20add%20Mastra%20to%20existing%20Node.js%20applications%20using%20the%20CLI",
+    "favicon": "https://mastra.ai/favicon.ico",
+    "extras": {
+        "links": [
+            "https://mastra.ai/en/docs/local-dev/creating-a-new-project",
+            "https://mastra.ai/",
+            "https://mastra.ai/docs",
+            "https://mastra.ai/examples"
+        ]
+    }
+}

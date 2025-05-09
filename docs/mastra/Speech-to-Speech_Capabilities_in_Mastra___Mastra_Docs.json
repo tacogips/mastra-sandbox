@@ -1,0 +1,18 @@
+{
+    "id": "https://mastra.ai/docs/voice/speech-to-speech",
+    "title": "Speech-to-Speech Capabilities in Mastra | Mastra Docs",
+    "url": "https://mastra.ai/docs/voice/speech-to-speech",
+    "publishedDate": "",
+    "author": "",
+    "text": "\n Introduction \n Speech-to-Speech (STS) in Mastra provides a standardized interface for real-time interactions across multiple providers. \nSTS enables continuous bidirectional audio communication through listening to events from Realtime models. Unlike separate TTS and STT operations, STS maintains an open connection that processes speech continuously in both directions. \n Configuration \n \n chatModel: Configuration for the realtime model.\n \n apiKey: Your OpenAI API key. Falls back to the OPENAI_API_KEY environment variable. \n model: The model ID to use for real-time voice interactions (e.g., gpt-4o-mini-realtime). \n options: Additional options for the realtime client, such as session configuration. \n \n \n speaker: The default voice ID for speech synthesis. This allows you to specify which voice to use for the speech output. \n \n const voice = new OpenAIRealtimeVoice ({ \n chatModel: { \n apiKey: ' your-openai-api-key ', \n model: ' gpt-4o-mini-realtime ', \n options: { \n sessionConfig: { \n turn_detection: { \n type: ' server_vad ', \n threshold: 0.6, \n silence_duration_ms: 1200, \n }, \n }, \n }, \n }, \n speaker: ' alloy ', // Default voice \n}); \n \n // If using default settings the configuration can be simplified to: \n const voice = new OpenAIRealtimeVoice (); \n Using STS \n import { Agent } from \" @mastra/core/agent \"; \n import { OpenAIRealtimeVoice } from \" @mastra/voice-openai-realtime \"; \n import { playAudio, getMicrophoneStream } from \" @mastra/node-audio \"; \n \n const agent = new Agent ({ \n name: ' Agent ', \n instructions: ` You are a helpful assistant with real-time voice capabilities. `, \n model: openai ( ' gpt-4o '), \n voice: new OpenAIRealtimeVoice (), \n}); \n \n // Connect to the voice service \n await agent.voice. connect (); \n \n // Listen for agent audio responses \n agent.voice. on ( ' speaker ', ({ audio }) =&gt; { \n playAudio (audio); \n}); \n \n // Initiate the conversation \n await agent.voice. speak ( ' How can I help you today? '); \n \n // Send continuous audio from the microphone \n const micStream = getMicrophoneStream (); \n await agent.voice. send (micStream); \n For integrating Speech-to-Speech capabilities with agents, refer to the Adding Voice to Agents documentation. Speech to Text Licensing",
+    "image": "https://mastra.ai/api/og/docs?title=Speech-to-Speech%20Capabilities%20in%20Mastra%20|%20Mastra%20Docs&description=Overview%20of%20speech-to-speech%20capabilities%20in%20Mastra,%20including%20real-time%20interactions%20and%20event-driven%20architecture.",
+    "favicon": "https://mastra.ai/favicon.ico",
+    "extras": {
+        "links": [
+            "https://mastra.ai/en/docs/voice/speech-to-speech",
+            "https://mastra.ai/",
+            "https://mastra.ai/docs",
+            "https://mastra.ai/examples"
+        ]
+    }
+}

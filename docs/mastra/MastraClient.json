@@ -1,0 +1,17 @@
+{
+    "id": "https://mastra.ai/docs/deployment/client",
+    "title": "MastraClient",
+    "url": "https://mastra.ai/docs/deployment/client",
+    "author": "",
+    "text": "Mastra Client SDK \n The Mastra Client SDK provides a simple and type-safe interface for interacting with your Mastra Server from your client environment. \n Development Requirements \n To ensure smooth local development, make sure you have: \n \n Node.js 18.x or later installed \n TypeScript 4.7+ (if using TypeScript) \n A modern browser environment with Fetch API support \n Your local Mastra server running (typically on port 4111) \n \n Installation \n npm npm install @mastra/client-js@latest \n Initialize Mastra Client \n To get started you’ll need to initialize your MastraClient with necessary parameters: \n import { MastraClient } from \" @mastra/client-js \"; \n \n const client = new MastraClient ({ \n baseUrl: \" http://localhost:4111 \", // Default Mastra development server port \n}); \n Configuration Options \n You can customize the client with various options: \n const client = new MastraClient ({ \n // Required \n baseUrl: \" http://localhost:4111 \", \n \n // Optional configurations for development \n retries: 3, // Number of retry attempts \n backoffMs: 300, // Initial retry backoff time \n maxBackoffMs: 5000, // Maximum retry backoff time \n headers: { // Custom headers for development \n \" X-Development \": \" true \" \n } \n}); \n Example \n Once your MastraClient is initialized you can start making client calls via the type-safe\ninterface \n // Get a reference to your local agent \n const agent = client. getAgent ( \" dev-agent-id \"); \n \n // Generate responses \n const response = await agent. generate ({ \n messages: [ \n { \n role: \" user \", \n content: \" Hello, I'm testing the local development setup! \" \n } \n ] \n}); \n Available Features \n Mastra client exposes all resources served by the Mastra Server \n \n Agents: Create and manage AI agents, generate responses, and handle streaming interactions \n Memory: Manage conversation threads and message history \n Tools: Access and execute tools available to agents \n Workflows: Create and manage automated workflows \n Vectors: Handle vector operations for semantic search and similarity matching \n \n Best Practices \n \n Error Handling: Implement proper error handling for development scenarios \n Environment Variables: Use environment variables for configuration \n Debugging: Enable detailed logging when needed \n \n // Example with error handling and logging \n try { \n const agent = client. getAgent ( \" dev-agent-id \"); \n const response = await agent. generate ({ \n messages: [{ role: \" user \", content: \" Test message \" }] \n }); \n console. log ( \" Response: \", response); \n} catch (error) { \n console. error ( \" Development error: \", error); \n} Serverless Platforms Overview",
+    "image": "https://mastra.ai/api/og/docs?title=MastraClient&description=Learn%20how%20to%20set%20up%20and%20use%20the%20Mastra%20Client%20SDK",
+    "favicon": "https://mastra.ai/favicon.ico",
+    "extras": {
+        "links": [
+            "https://mastra.ai/en/docs/deployment/client",
+            "https://mastra.ai/",
+            "https://mastra.ai/docs",
+            "https://mastra.ai/examples"
+        ]
+    }
+}

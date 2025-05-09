@@ -1,0 +1,18 @@
+{
+    "id": "https://mastra.ai/examples/workflows/creating-a-workflow",
+    "title": "Example: Creating a Workflow | Workflows | Mastra Docs",
+    "url": "https://mastra.ai/examples/workflows/creating-a-workflow",
+    "publishedDate": "",
+    "author": "",
+    "text": "\n A workflow allows you to define and execute sequences of operations in a structured path. This example shows a workflow with a single step. \n import { Step, Workflow } from \" @mastra/core/workflows \"; \n import { z } from \" zod \"; \n \n const myWorkflow = new Workflow ({ \n name: \" my-workflow \", \n triggerSchema: z. object ({ \n input: z. number (), \n }), \n}); \n \n const stepOne = new Step ({ \n id: \" stepOne \", \n inputSchema: z. object ({ \n value: z. number (), \n }), \n outputSchema: z. object ({ \n doubledValue: z. number (), \n }), \n execute: async ({ context }) =&gt; { \n const doubledValue = context?.triggerData?.input * 2; \n return { doubledValue }; \n }, \n}); \n \n myWorkflow. step (stepOne). commit (); \n \n const { runId, start } = myWorkflow. createRun (); \n \n const res = await start ({ \n triggerData: { input: 90 }, \n}); \n \n console. log (res.results); \n \n Deploying an MCPServer Sequential Steps",
+    "image": "https://mastra.ai/api/og/docs?title=Example:%20Creating%20a%20Workflow%20|%20Workflows%20|%20Mastra%20Docs&description=Example%20of%20using%20Mastra%20to%20define%20and%20execute%20a%20simple%20workflow%20with%20a%20single%20step.",
+    "favicon": "https://mastra.ai/favicon.ico",
+    "extras": {
+        "links": [
+            "https://mastra.ai/en/examples/workflows/creating-a-workflow",
+            "https://mastra.ai/",
+            "https://mastra.ai/docs",
+            "https://mastra.ai/examples"
+        ]
+    }
+}

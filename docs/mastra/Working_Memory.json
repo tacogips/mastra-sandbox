@@ -1,0 +1,17 @@
+{
+    "id": "https://mastra.ai/docs/memory/working-memory",
+    "title": "Working Memory",
+    "url": "https://mastra.ai/docs/memory/working-memory",
+    "author": "",
+    "text": "\n While conversation history and semantic recall help agents remember conversations, working memory allows them to maintain persistent information about users across interactions within a thread. \n Think of it as the agent’s active thoughts or scratchpad – the key information they keep available about the user or task. It’s similar to how a person would naturally remember someone’s name, preferences, or important details during a conversation. \n This is useful for maintaining ongoing state that’s always relevant and should always be available to the agent. \n Quick Start \n Here’s a minimal example of setting up an agent with working memory: \n import { Agent } from \" @mastra/core/agent \"; \n import { Memory } from \" @mastra/memory \"; \n import { openai } from \" @ai-sdk/openai \"; \n \n // Create agent with working memory enabled \n const agent = new Agent ({ \n name: \" PersonalAssistant \", \n instructions: \" You are a helpful personal assistant. \", \n model: openai ( \" gpt-4o \"), \n memory: new Memory ({ \n options: { \n workingMemory: { \n enabled: true, \n use: \" tool-call \", // Will be the only option in a future breaking change release \n }, \n }, \n }), \n}); \n How it Works \n Working memory is a block of Markdown text that the agent is able to update over time to store continuously relevant information: \n \n Custom Templates \n Templates guide the agent on what information to track and update in working memory. While a default template is used if none is provided, you’ll typically want to define a custom template tailored to your agent’s specific use case to ensure it remembers the most relevant information. \n Here’s an example of a custom template. In this example the agent will store the users name, location, timezone, etc as soon as the user sends a message containing any of the info: \n const memory = new Memory ({ \n options: { \n workingMemory: { \n enabled: true, \n template: ` \n # User Profile \n \n ## Personal Info \n \n - Name: \n - Location: \n - Timezone: \n \n ## Preferences \n \n - Communication Style: [e.g., Formal, Casual] \n - Project Goal: \n - Key Deadlines: \n - [Deadline 1]: [Date] \n - [Deadline 2]: [Date] \n \n ## Session State \n \n - Last Task Discussed: \n - Open Questions: \n - [Question 1] \n - [Question 2] \n `, \n }, \n }, \n}); \n If your agent is not properly updating working memory when you expect it to, you can add system instructions on how and when to use this template in your agents instruction setting. \n Examples \n \n Streaming working memory \n Using a working memory template \n Semantic Recall Memory Processors",
+    "image": "https://mastra.ai/api/og/docs?title=Working%20Memory&description=undefined",
+    "favicon": "https://mastra.ai/favicon.ico",
+    "extras": {
+        "links": [
+            "https://mastra.ai/en/docs/memory/working-memory",
+            "https://mastra.ai/",
+            "https://mastra.ai/docs",
+            "https://mastra.ai/examples"
+        ]
+    }
+}

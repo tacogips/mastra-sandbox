@@ -1,0 +1,16 @@
+{
+    "id": "https://mastra.ai/docs/workflows/steps",
+    "title": "Creating Steps and Adding to Workflows | Mastra Docs",
+    "url": "https://mastra.ai/docs/workflows/steps",
+    "author": "",
+    "text": "Defining Steps in a Workflow \n When you build a workflow, you typically break down operations into smaller tasks that can be linked and reused. Steps provide a structured way to manage these tasks by defining inputs, outputs, and execution logic. \n The code below shows how to define these steps inline or separately. \n Inline Step Creation \n You can create steps directly within your workflow using and . This code shows how to define, link, and execute two steps in sequence. \n Creating Steps Separately \n If you prefer to manage your step logic in separate entities, you can define steps outside and then add them to your workflow. This code shows how to define steps independently and link them afterward. \n Overview Control Flow",
+    "image": "https://mastra.ai/api/og/docs?title=Creating%20Steps%20and%20Adding%20to%20Workflows%20%7C%20Mastra%20Docs",
+    "extras": {
+        "links": [
+            "https://mastra.ai/",
+            "https://mastra.ai/docs",
+            "https://mastra.ai/examples",
+            "https://mastra.ai/showcase"
+        ]
+    }
+}

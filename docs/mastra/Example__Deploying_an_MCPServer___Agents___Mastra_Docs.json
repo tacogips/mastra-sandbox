@@ -1,0 +1,18 @@
+{
+    "id": "https://mastra.ai/examples/agents/deploying-mcp-server",
+    "title": "Example: Deploying an MCPServer | Agents | Mastra Docs",
+    "url": "https://mastra.ai/examples/agents/deploying-mcp-server",
+    "publishedDate": "",
+    "author": "",
+    "text": "\n This example guides you through setting up a basic Mastra MCPServer using the stdio transport, building it, and preparing it for deployment, such as publishing to NPM. \n Install Dependencies \n Install the necessary packages: \n pnpm add @mastra/mcp @mastra/core tsup \n Set up MCP Server \n \n \n Create a file for your stdio server, for example, /src/mastra/stdio.ts. \n \n \n Add the following code to the file. Remember to import your actual Mastra tools and name the server appropriately. \n #!/usr/bin/env node \n import { MCPServer } from \" @mastra/mcp \"; \n import { weatherTool } from \"./tools \"; \n \n const server = new MCPServer ({ \n name: \" my-mcp-server \", \n version: \" 1.0.0 \", \n tools: { weatherTool }, \n}); \n \n server. startStdio (). catch ((error) =&gt; { \n console. error ( \" Error running MCP server: \", error); \n process. exit ( 1); \n}); \n \n \n Update your package.json to include the bin entry pointing to your built server file and a script to build the server. \n \n \n { \n \" bin \": \" dist/stdio.js \", \n \" scripts \": { \n \" build:mcp \": \" tsup src/mastra/stdio.ts --format esm --no-splitting --dts &amp;&amp; chmod +x dist/stdio.js \" \n } \n} \n \n \n Run the build command: \n This will compile your server code and make the output file executable. \n \n \n Deploying to NPM \n To make your MCP server available for others (or yourself) to use via npx or as a dependency, you can publish it to NPM. \n \n \n Ensure you have an NPM account and are logged in ( npm login). \n \n \n Make sure your package name in package.json is unique and available. \n \n \n Run the publish command from your project root after building: \n npm publish --access public \n For more details on publishing packages, refer to the NPM documentation . \n \n \n Use the Deployed MCP Server \n Once published, your MCP server can be used by an MCPClient by specifying the command to run your package. You can also use any other MCP client like Claude desktop, Cursor, or Windsurf. \n import { MCPClient } from \" @mastra/mcp \"; \n \n const mcp = new MCPClient ({ \n servers: { \n // Give this MCP server instance a name \n yourServerName: { \n command: \" npx \", \n args: [ \" -y \", \" @your-org-name/your-package-name@latest \"], // Replace with your package name \n }, \n }, \n}); \n \n // You can then get tools or toolsets from this configuration to use in your agent \n const tools = await mcp. getTools (); \n const toolsets = await mcp. getToolsets (); \n Note: If you published without an organization scope, the args might just be [\"-y\", \"your-package-name@latest\"]. \n \n Give your Agent a voice Creating a Workflow",
+    "image": "https://mastra.ai/api/og/docs?title=Example:%20Deploying%20an%20MCPServer%20|%20Agents%20|%20Mastra%20Docs&description=Example%20of%20setting%20up,%20building,%20and%20deploying%20a%20Mastra%20MCPServer%20using%20the%20stdio%20transport%20and%20publishing%20it%20to%20NPM.",
+    "favicon": "https://mastra.ai/favicon.ico",
+    "extras": {
+        "links": [
+            "https://mastra.ai/en/examples/agents/deploying-mcp-server",
+            "https://mastra.ai/",
+            "https://mastra.ai/docs",
+            "https://mastra.ai/examples"
+        ]
+    }
+}
