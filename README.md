@@ -15,7 +15,14 @@ This project demonstrates how to:
 
 ## Demo
 
-[Video Demo](/img/capture.mp4)
+### Video Demo
+![Video Demo](img/capture.gif)
+
+### Original Video
+<video width="100%" controls>
+  <source src="img/capture.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
 ## Output Example
 
