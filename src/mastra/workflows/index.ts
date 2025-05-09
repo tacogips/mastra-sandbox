@@ -210,8 +210,8 @@ const weatherWorkflow = new Workflow({
 //  })
 //),
 const NEWS_NUM_TO_FETCH = 1;
-const hackerNewsFetchLatestStep = createStep({
-  id: "hacker-news-fetch-latest",
+const hackerNewsFetchTopStep = createStep({
+  id: "hacker-news-fetch-top",
   description:
     "Fetches the latest stories from Hacker News using hackerNewsAgent",
   outputSchema: z.array(
@@ -234,7 +234,7 @@ const hackerNewsFetchLatestStep = createStep({
     let prompt = `
       ## instruction
       You are an excellent web news curator.
-      Retrieve the top ${NEWS_NUM_TO_FETCH} news from Hacker News and include the contents of each article.
+      Retrieve the **top ${NEWS_NUM_TO_FETCH}** news from Hacker News and include the contents of each article.
       Return the output in JSON format. Do not include anything other than JSON data in the output.
       This response is expected to be parsable with JSON.parse()
 
@@ -295,7 +295,7 @@ const fetchNews = createStep({
 
     // Get the news data from the previous step
     const newsItems =
-      inputData || context?.steps?.["hacker-news-fetch-latest"]?.output;
+      inputData || context?.steps?.["hacker-news-fetch-top"]?.output;
 
     if (!newsItems || !Array.isArray(newsItems)) {
       throw new Error(
@@ -440,11 +440,14 @@ const zundaNews = createStep({
     const agent = zundaAgent;
     let translatedNews = [];
     //TODO(tacogips) split out to each steps and run parallel
-    for (const eachNews of newsItems) {
+    for (const [index, eachNews] of newsItems.entries()) {
+      const artileNumber = index + 1;
       let prompt = `
         ## Instruction
         You are an excellent web news curator.
         Read the given JSON array, translate the title and summary into Japanese, and connect them in a natural way to make them readable as coherent text.
+        記事には番号が付いており、下記のarticle numberで与えられます。　
+        出力される文章には何番目の記事かを最初に言うようにしてください。
 
         ### input json format
         \`\`\`json
@@ -461,14 +464,42 @@ const zundaNews = createStep({
         ]
         \`\`\`
 
+        ## output example1
+        example article number  = 2
+        ### source json
+
+            {
+              "title": "A Formal Analysis of Apple's iMessage PQ3 Protocol [pdf]",
+
+              "url": "https://www.usenix.org/system/files/conference/usenixsecurity25/sec25cycle1-prepub-595-linker.pdf",
+
+              "link_to_download": "https://www.usenix.org/system/files/conference/usenixsecurity25/sec25cycle1-prepub-595-linker.pdf",
+
+              "description": "A formal analysis of Apple's iMessage PQ3 protocol, providing insights into its security features and potential vulnerabilities.",
+
+              "score": 70,
+
+              "date": "2025-05-09 5:05:13.921876778 +00:00:00",
+
+              "summary": "<couldn't fetch>"
+
+            }
+
+        ###  output example
+        2番目の記事はアップルのiMessage PQ3プロトコルの形式的分析 [pdf] なのだ。このプロトコルのセキュリティ機能と潜在的な脆弱性についての洞察を提供しているのだ。
+        詳細はpdfファイルに書かれていてわからないのだ。
+
+
+        ## article number
+        ${artileNumber}
+
         ## contents
         \`\`\`json
         ${JSON.stringify(eachNews, null, 2)};
         \`\`\`
 
-        ## output text format
-        {about title}. {about summary}
-       `;
+
+        `;
 
       console.log("fetching news ===============", prompt);
 
@@ -489,7 +520,7 @@ const zundaNews = createStep({
 const hackerNewsWorkflow = new Workflow({
   name: "hackernews-workflow",
 })
-  .step(hackerNewsFetchLatestStep)
+  .step(hackerNewsFetchTopStep)
   .then(fetchNews)
   .then(zundaNews);
 
