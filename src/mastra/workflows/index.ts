@@ -228,10 +228,10 @@ const fetchNews = createStep({
   execute: async ({ inputData, mastra }) => {
     //TODO(tacogips) inputData is null
     // Get the agent from mastra
-    const agent = mastra?.agents?.claudeAgent;
+    const agent = mastra?.agents?.urlToMarkdownAgent;
 
     if (!agent) {
-      throw new Error("Claude News Agent not found");
+      throw new Error("url to markdown Agent not found");
     }
 
     console.log("==========", inputData);
