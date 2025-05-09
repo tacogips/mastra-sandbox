@@ -252,7 +252,6 @@ const fetchNews = createStep({
         "News text not found - tried both inputData and context.steps",
       );
     }
-    console.log("===============", newsText);
 
     // Get the agent from mastra
     const agent = mastra?.getAgents()?.urlToMarkdownAgent;
@@ -264,9 +263,14 @@ const fetchNews = createStep({
     let prompt = `
       ## Instruction
       You are an excellent web news curator.
-      Extract the source URLs from the following summarized articles' contents, fetch their content using the web fetch tool. Summarize the retrieved content and attach it.
+      A JSON array containing news article URLs will be passed to you as content.
+      Extract the source URLs from the following summarized articles' contents, fetch their content using the web fetch tool. Summarize the retrieved content and attach to the json object in 'summary' field'.
+
+
       ## contents
      ${newsText}`;
+
+    console.log("===============", prompt);
 
     const response = await agent.generate([
       {

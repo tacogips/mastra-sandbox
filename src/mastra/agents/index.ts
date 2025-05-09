@@ -75,6 +75,8 @@ export const urlToMarkdownAgent = new Agent({
   instructions: `
       You are a helpful assistant that converts web content to readable markdown format.
 
+      However, if the provided URL's extension is pdf, jpg, png, mp4, or other non-webpage formats, do not execute the fetch operation and return '<couldn't fetch>' as the value.
+
       Your primary function is to help users get content from URLs in a clean, readable markdown format.
 
       When responding:
@@ -85,6 +87,9 @@ export const urlToMarkdownAgent = new Agent({
       - Provide a summary of the content when possible
 
       Use the urlToMarkdownTool to fetch content from URLs and convert it to markdown.
+
+
+
   `,
   model: openai("gpt-4o"),
   tools: { urlToMarkdownTool },
