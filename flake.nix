@@ -4,11 +4,18 @@
   inputs = {
     cratedocs-mcp.url = "github:tacogips/cratedocs-mcp";
     bravesearch-mcp.url = "github:tacogips/bravesearch-mcp";
+    hn-mcp.url = "github:tacogips/hn-mcp";
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
   };
 
   outputs =
-    { self, nixpkgs, cratedocs-mcp, bravesearch-mcp }:
+    {
+      self,
+      nixpkgs,
+      cratedocs-mcp,
+      bravesearch-mcp,
+      hn-mcp,
+    }:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -27,6 +34,7 @@
           nodePackages.pnpm
           cratedocs-mcp.packages.${system}.default
           bravesearch-mcp.packages.${system}.default
+          hn-mcp.packages.${system}.default
         ];
 
         shellHook = ''

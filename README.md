@@ -2,6 +2,10 @@
 
 This is a study project using the Mastra framework that fetches top news from Hacker News and translates them into Japanese using a specific character's speech pattern.
 
+## Requirements
+
+This project requires the Hacker News MCP (https://github.com/tacogips/hn-mcp) to function properly.
+
 ## Overview
 
 This project demonstrates how to:
