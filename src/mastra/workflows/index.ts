@@ -264,13 +264,15 @@ const fetchNews = createStep({
       ## Instruction
       You are an excellent web news curator.
       A JSON array containing news article URLs will be passed to you as content.
-      Extract the source URLs from the following summarized articles' contents, fetch their content using the web fetch tool. Summarize the retrieved content and attach to the json object in 'summary' field'.
+      Extract the source URLs from the following summarized articles' contents, fetch their content using the web fetch tool. Summarize the retrieved content and attach to the json object in 'summary' field of the json'.
 
+      ## Note on output format
+      Please be careful to maintain the original JSON format while only adding the "summary" field
 
       ## contents
      ${newsText}`;
 
-    console.log("===============", prompt);
+    console.log("fetching news ===============", prompt);
 
     const response = await agent.generate([
       {
@@ -279,6 +281,7 @@ const fetchNews = createStep({
       },
     ]);
 
+    console.log("---- fetched summary response ===============", response.text);
     return { text: response.text };
   },
 });
