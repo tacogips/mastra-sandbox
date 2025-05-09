@@ -209,7 +209,7 @@ const weatherWorkflow = new Workflow({
 //    date: z.string().optional(),
 //  })
 //),
-const NEWS_NUM_TO_FETCH = 5;
+const NEWS_NUM_TO_FETCH = 3;
 const hackerNewsFetchTopStep = createStep({
   id: "hacker-news-fetch-top",
   description:

@@ -13,9 +13,9 @@ This project demonstrates how to:
 - Extract content from news articles
 - Translate and format content in a specific speaking style (ズンダ語/Zunda-style with "のだ" sentence endings)
 
-## Screenshot
+## Demo
 
-![Mastra Workflow](/img/image.png)
+[Video Demo](/img/capture.mp4)
 
 ## Output Example
 
