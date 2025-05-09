@@ -91,7 +91,8 @@ export const urlToMarkdownAgent = new Agent({
 
 
   `,
-  model: openai("gpt-4.1-mini"),
+  //model: openai("gpt-4.1-mini"),
+  model: openai("gpt-4o"),
   tools: { urlToMarkdownTool },
   memory: new Memory({
     storage: new LibSQLStore({
