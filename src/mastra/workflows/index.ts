@@ -182,14 +182,41 @@ const weatherWorkflow = new Workflow({
   .step(fetchWeather)
   .then(planActivities);
 
-// Create a step directly from the hackerNewsAgent
-const hackerNewsFetchLatestStep = createStep(hackerNewsAgent);
+// Create a step that uses the hackerNewsAgent
+const hackerNewsFetchLatestStep = createStep({
+  id: "hacker-news-fetch-latest",
+  description: "Fetches the latest stories from Hacker News using hackerNewsAgent",
+  inputSchema: z.object({
+    prompt: z.string().default("Fetch the latest Hacker News stories and format them as a readable list. Include the title, score, and URL for each story."),
+  }),
+  outputSchema: z.object({
+    text: z.string().describe("The formatted list of Hacker News stories"),
+  }),
+  execute: async ({ inputData, mastra }) => {
+    // Get the agent from mastra
+    const agent = mastra?.agents?.hackerNewsAgent;
+    
+    if (!agent) {
+      throw new Error("Hacker News Agent not found");
+    }
+    
+    // Send a request to the agent
+    const response = await agent.generate([
+      {
+        role: "user",
+        content: inputData.prompt
+      }
+    ]);
+    
+    return { text: response.text };
+  },
+});
 
 // Create a workflow using the hackerNewsAgent step
 const hackerNewsWorkflow = new Workflow({
   name: "hackernews-workflow",
   triggerSchema: z.object({
-    limit: z.number().optional().default(10).describe("Number of stories to fetch"),
+    prompt: z.string().optional().default("Fetch the latest Hacker News stories and format them as a readable list. Include the title, score, and URL for each story."),
   }),
 }).step(hackerNewsFetchLatestStep);
 
