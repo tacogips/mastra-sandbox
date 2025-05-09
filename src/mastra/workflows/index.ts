@@ -215,20 +215,19 @@ const hackerNewsFetchLatestStep = createStep({
 
 const fetchNews = createStep({
   id: "fetch-news-content",
-  description:
-    "Fetches the content of news stories using urlToMarkdownAgent",
+  description: "Fetches the content of news stories using urlToMarkdownAgent",
   inputSchema: z.object({
     text: z.string().describe("The formatted list of Hacker News stories"),
   }),
   outputSchema: z.object({
-    text: z.string().describe("The formatted list of Hacker News stories with content"),
+    text: z
+      .string()
+      .describe("The formatted list of Hacker News stories with content"),
   }),
   execute: async ({ inputData, mastra }) => {
     if (!inputData || !inputData.text) {
       throw new Error("Input data not found or missing text field");
     }
-
-    console.log("==========", inputData);
 
     // Get the agent from mastra
     const agent = mastra?.getAgents()?.urlToMarkdownAgent;
@@ -236,7 +235,7 @@ const fetchNews = createStep({
     if (!agent) {
       throw new Error("url to markdown Agent not found");
     }
-    
+
     let prompt = `
       ## Instruction
       You are an excellent web news curator.
@@ -263,8 +262,8 @@ const hackerNewsWorkflow = new Workflow({
   .then(fetchNews, {
     // Map the output of the first step to the input of the second step
     variables: {
-      text: { step: hackerNewsFetchLatestStep, path: 'text' }
-    }
+      text: { step: hackerNewsFetchLatestStep, path: "text" },
+    },
   });
 
 // Commit both workflows
