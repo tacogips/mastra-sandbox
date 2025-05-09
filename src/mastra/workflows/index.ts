@@ -183,7 +183,7 @@ const weatherWorkflow = new Workflow({
   .then(planActivities);
 
 // Create a step that uses the hackerNewsAgent
-const hackerNewsFetchLatestStep = createStep({
+const hackerNewsFetchLatestStep = new Step({
   id: "hacker-news-fetch-latest",
   description:
     "Fetches the latest stories from Hacker News using hackerNewsAgent",
@@ -213,7 +213,7 @@ const hackerNewsFetchLatestStep = createStep({
   },
 });
 
-const fetchNews = createStep({
+const fetchNews = new Step({
   id: "hacker-news-fetch-latest",
   description:
     "Fetches the latest stories from Hacker News using hackerNewsAgent",
