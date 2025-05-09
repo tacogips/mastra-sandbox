@@ -1,6 +1,7 @@
 import { openai } from "@ai-sdk/openai";
 import { Agent } from "@mastra/core/agent";
 import { Step, Workflow } from "@mastra/core/workflows";
+import { createStep } from "@mastra/core/workflows/vNext";
 import { z } from "zod";
 
 const llm = openai("gpt-4o");
@@ -182,14 +183,10 @@ const weatherWorkflow = new Workflow({
 
 weatherWorkflow.commit();
 
-const fetchWeather = new Step({}); //TODO implement thid
+const hackerNewsFetchLatestStep = new Step({}); //TODO implement thid
 const hackerNewsWorkflow = new Workflow({
   name: "hackernews-workflow",
-  //triggerSchema: z.object({
-  //  city: z.string().describe("The city to get the weather for"),
-  //}),
-}).step(fetchWeather);
-//.then(planActivities);
+}).step(hackerNewsFetchLatestStep);
 
 weatherWorkflow.commit();
 
