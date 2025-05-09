@@ -173,6 +173,21 @@ function getWeatherCondition(code: number): string {
   return conditions[code] || "Unknown";
 }
 
+/**
+ * Cleans JSON text by removing markdown code block markers
+ * @param text - The text containing JSON possibly wrapped in code block markers
+ * @returns Cleaned JSON text with code block markers removed
+ */
+function cleanJsonText(text: string): string {
+  let jsonText = text;
+  if (jsonText.includes("```json")) {
+    jsonText = jsonText.replace(/```json|```/g, "").trim();
+  } else if (jsonText.includes("```")) {
+    jsonText = jsonText.replace(/```/g, "").trim();
+  }
+  return jsonText;
+}
+
 const weatherWorkflow = new Workflow({
   name: "weather-workflow",
   triggerSchema: z.object({
@@ -198,9 +213,16 @@ const hackerNewsFetchLatestStep = createStep({
   id: "hacker-news-fetch-latest",
   description:
     "Fetches the latest stories from Hacker News using hackerNewsAgent",
-  outputSchema: z.object({
-    text: z.string().describe("The formatted list of Hacker News stories"),
-  }),
+  outputSchema: z.array(
+    z.object({
+      title: z.string().optional(),
+      url: z.string().optional(),
+      link_to_download: z.string().optional(),
+      description: z.string().optional(),
+      score: z.number().optional(),
+      date: z.string().optional(),
+    }),
+  ),
   execute: async ({ mastra }) => {
     const agent = mastra?.agents?.hackerNewsAgent;
 
@@ -213,6 +235,7 @@ const hackerNewsFetchLatestStep = createStep({
       You are an excellent web news curator.
       Retrieve the top 5 news from Hacker News and include the contents of each article.
       Return the output in JSON format. Do not include anything other than JSON data in the output.
+      This response is expected to be parsable with JSON.parse()
 
       ## Output json format
       [
@@ -234,66 +257,107 @@ const hackerNewsFetchLatestStep = createStep({
       },
     ]);
 
-    return { text: response.text };
+    // Parse the JSON response and return as an array of objects
+    // Remove code block markers if present (```json and ```)
+    const jsonText = cleanJsonText(response.text);
+    return JSON.parse(jsonText);
   },
 });
 
 const fetchNews = createStep({
   id: "fetch-news-content",
   description: "Fetches the content of news stories using urlToMarkdownAgent",
-  inputSchema: z.object({
-    text: z.string().describe("The formatted list of Hacker News stories"),
-  }),
-  outputSchema: z.object({
-    text: z
-      .string()
-      .describe("The formatted list of Hacker News stories with content"),
-  }),
+  inputSchema: z.array(
+    z.object({
+      title: z.string().optional(),
+      url: z.string().optional(),
+      link_to_download: z.string().optional(),
+      description: z.string().optional(),
+      score: z.number().optional(),
+      date: z.string().optional(),
+    }),
+  ),
+  outputSchema: z.array(
+    z.object({
+      title: z.string().optional(),
+      url: z.string().optional(),
+      link_to_download: z.string().optional(),
+      description: z.string().optional(),
+      score: z.number().optional(),
+      date: z.string().optional(),
+      summary: z.string().optional(),
+    }),
+  ),
   execute: async ({ inputData, context, mastra }) => {
     console.log("Debug - Input Data:", inputData);
     console.log("Debug - Context:", context);
 
-    // Try both methods to get data
-    const newsText =
-      inputData?.text ||
-      context?.steps?.["hacker-news-fetch-latest"]?.output?.text;
+    // Get the news data from the previous step
+    const newsItems =
+      inputData || context?.steps?.["hacker-news-fetch-latest"]?.output;
 
-    if (!newsText) {
+    if (!newsItems || !Array.isArray(newsItems)) {
       throw new Error(
-        "News text not found - tried both inputData and context.steps",
+        "News items not found or not in expected format - tried both inputData and context.steps",
       );
     }
 
     // Get the agent from mastra
     const agent = mastra?.getAgents()?.urlToMarkdownAgent;
-
     if (!agent) {
       throw new Error("url to markdown Agent not found");
     }
+    let newsWithSummary = [];
+    for (const eachNews of newsItems) {
+      let prompt = `
+        ## Instruction
+        You are an excellent web news curator.
+        A JSON array containing news article URLs will be passed to you as content.
+        Extract the source URLs from the following summarized articles' contents, fetch their content using the web fetch tool. Summarize the retrieved content and attach to the json object in 'summary' field of the json'.
 
-    let prompt = `
-      ## Instruction
-      You are an excellent web news curator.
-      A JSON array containing news article URLs will be passed to you as content.
-      Extract the source URLs from the following summarized articles' contents, fetch their content using the web fetch tool. Summarize the retrieved content and attach to the json object in 'summary' field of the json'.
+        ## Note on output format
+        Please be careful to maintain the original JSON format while only adding the "summary" field
 
-      ## Note on output format
-      Please be careful to maintain the original JSON format while only adding the "summary" field
+        Return the output in JSON format. Do not include anything other than JSON data in the output.
+        This response is expected to be parsable with JSON.parse()
 
-      ## contents
-     ${newsText}`;
+        ## Output json format
+        [
+          {
+            "title" :{title}
+            "url" :{url}
+            "link_to_download" :{link_to_download}
+            "description" :{description}
+            "score" :{score}
+            "date" :{date}
+            "summary" :{summary}
+          }
+        ]
 
-    console.log("fetching news ===============", prompt);
+        ## contents
+        \`\`\`json
+        ${JSON.stringify(eachNews, null, 2)};
+        \`\`\`
+       `;
 
-    const response = await agent.generate([
-      {
-        role: "user",
-        content: prompt,
-      },
-    ]);
+      console.log("fetching news ===============", prompt);
 
-    console.log("---- fetched summary response ===============", response.text);
-    return { text: response.text };
+      const response = await agent.generate([
+        {
+          role: "user",
+          content: prompt,
+        },
+      ]);
+
+      console.log(
+        "---- fetched summary response ===============",
+        response.text,
+      );
+
+      const jsonText = cleanJsonText(response.text);
+      newsWithSummary.push(JSON.parse(jsonText));
+    }
+    return newsWithSummary;
   },
 });
 
@@ -302,12 +366,7 @@ const hackerNewsWorkflow = new Workflow({
   name: "hackernews-workflow",
 })
   .step(hackerNewsFetchLatestStep)
-  .then(fetchNews, {
-    // Map the output of the first step to the input of the second step
-    variables: {
-      text: { step: hackerNewsFetchLatestStep, path: "text" },
-    },
-  });
+  .then(fetchNews);
 
 // Commit both workflows
 hackerNewsWorkflow.commit();
