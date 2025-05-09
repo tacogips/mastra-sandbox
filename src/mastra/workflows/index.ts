@@ -308,6 +308,7 @@ const fetchNews = createStep({
       throw new Error("url to markdown Agent not found");
     }
     let newsWithSummary = [];
+    //TODO(tacogips) split out to each steps and run parallel
     for (const eachNews of newsItems) {
       let prompt = `
         ## Instruction
