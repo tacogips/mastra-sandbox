@@ -5,8 +5,13 @@
     cratedocs-mcp.url = "github:tacogips/cratedocs-mcp";
     bravesearch-mcp.url = "github:tacogips/bravesearch-mcp";
     hn-mcp.url = "github:tacogips/hn-mcp";
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    nixpkgs.url = "github:tacogips/nixpkgs-security/ae36ce5d71747ef2655933b315a361463ea90d82";
   };
+
+  # Share the patched Node.js and CA bundle across transitive development inputs.
+  inputs.bravesearch-mcp.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.cratedocs-mcp.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.hn-mcp.inputs.nixpkgs.follows = "nixpkgs";
 
   outputs =
     {
@@ -31,14 +36,14 @@
       devShells.${system}.default = pkgs.mkShell {
         buildInputs = with pkgs; [
           nodejs_22
-          nodePackages.pnpm
+          pnpm
           cratedocs-mcp.packages.${system}.default
           bravesearch-mcp.packages.${system}.default
           hn-mcp.packages.${system}.default
         ];
 
         shellHook = ''
-          echo "Node.js $(${pkgs.nodejs_22}/bin/node --version) and pnpm $(${pkgs.nodePackages.pnpm}/bin/pnpm --version) are available in this shell"
+          echo "Node.js $(${pkgs.nodejs_22}/bin/node --version) and pnpm $(${pkgs.pnpm}/bin/pnpm --version) are available in this shell"
         '';
       };
     };
