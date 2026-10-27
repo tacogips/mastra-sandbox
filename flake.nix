@@ -5,7 +5,7 @@
     cratedocs-mcp.url = "github:tacogips/cratedocs-mcp";
     bravesearch-mcp.url = "github:tacogips/bravesearch-mcp";
     hn-mcp.url = "github:tacogips/hn-mcp";
-    nixpkgs.url = "github:tacogips/nixpkgs-security/ae36ce5d71747ef2655933b315a361463ea90d82";
+    nixpkgs.url = "github:tacogips/nixpkgs-security/4a5495d1c0a7c62200b55deeeecb64f03b093056";
   };
 
   # Share the patched Node.js and CA bundle across transitive development inputs.
